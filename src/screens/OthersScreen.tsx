@@ -10,17 +10,19 @@ import HomeLogo from '../images/HomeLogo';
 type OthersScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Others'>;
 
 type Props = {
-  setGradientColors: (colors: string[]) => void;
+  setAppState: (state: any) => void;
   navigation: OthersScreenNavigationProp;
 };
 
-const OthersScreen: React.FC<Props> = ({ setGradientColors, navigation }: Props) => {
+const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setGradientColors(['#FFFFFF', '#D9A262']);
-    });
-    return unsubscribe;
-  }, [navigation]);
+    setAppState((prevState: any) => ({
+      ...prevState,
+      gradientColors: ['#FFFFFF', '#D9A262'],
+      bottomNavBgColor: 'rgba(225,157,94,0.29)',
+      activeButton: 'Others',
+    }));
+  }, [navigation, setAppState]);
 
   return (
     <View style={styles.container}>

@@ -11,16 +11,18 @@ import HomeLogo from '../images/HomeLogo';
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 type Props = {
-  setGradientColors: (colors: string[]) => void;
+  setAppState: (state: any) => void;
   navigation: HomeScreenNavigationProp;
 };
-const HomeScreen: React.FC<Props> = ({ setGradientColors, navigation }: Props) => {
+const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setGradientColors(['#FFFFFF', '#FFB6C1']);
-    });
-    return unsubscribe;
-  }, [navigation]);
+    setAppState((prevState: any) => ({
+      ...prevState,
+      gradientColors: ['#FFFFFF', '#FFB6C1'],
+      bottomNavBgColor: 'rgba(92,41,41,0.49)',
+      activeButton: 'Home',
+    }));
+  }, [navigation, setAppState]);
 
   return (
     <View style={styles.container}>

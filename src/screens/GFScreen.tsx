@@ -10,17 +10,19 @@ import GFLogo from '../images/GFLogo';
 type GFScreenNavigationProp = StackNavigationProp<RootStackParamList, 'GF'>;
 
 type Props = {
-  setGradientColors: (colors: string[]) => void;
+  setAppState: (state: any) => void;
   navigation: GFScreenNavigationProp;
 };
 
-const GFScreen: React.FC<Props> = ({ setGradientColors, navigation }: Props) => {
+const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setGradientColors(['#FFFFFF', '#B8CD9E']);
-    });
-    return unsubscribe;
-  }, [navigation]);
+    setAppState((prevState: any) => ({
+      ...prevState,
+      gradientColors: ['#FFFFFF', '#B8CD9E'],
+      bottomNavBgColor: 'rgba(147,147,147,0.49)',
+      activeButton: 'GF',
+    }));
+  }, [navigation, setAppState]);
 
   return (
     <View style={styles.container}>
@@ -30,7 +32,6 @@ const GFScreen: React.FC<Props> = ({ setGradientColors, navigation }: Props) => 
         <Icon name="plus" size={30} color="#000" />
         </View>
       <View style={styles.viewElements}>
-
       </View>
     </View>
   );

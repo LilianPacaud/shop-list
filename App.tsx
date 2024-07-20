@@ -33,26 +33,31 @@ const BackgroundWrapper = ({ children, gradientColors }: { children: React.React
 
 
 export default function App() {
-  const [gradientColors, setGradientColors] = useState<string[]>(['#FFFFFF', '#FFB6C1']); // Default colors
+  const [appState, setAppState] = useState({
+    gradientColors: ['#FFFFFF', '#FFB6C1'], // Default colors
+    bottomNavBgColor: '#FFFFFF', // Default background color for BottomNavigation
+    activeButton: 'Home', // Default active button
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer theme={navTheme}>
-        <BackgroundWrapper gradientColors={gradientColors}>
+        <BackgroundWrapper gradientColors={appState.gradientColors}>
           <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false,  cardStyle: { backgroundColor: 'transparent' } }}>
             <Stack.Screen name="Home">
-            {props => <HomeScreen {...props} setGradientColors={setGradientColors} />}
+            {props => <HomeScreen {...props} setAppState={setAppState} />}
             </Stack.Screen>              
             <Stack.Screen name="GF">
-              {props => <GFScreen {...props} setGradientColors={setGradientColors} />}
+              {props => <GFScreen {...props} setAppState={setAppState} />}
             </Stack.Screen>
             <Stack.Screen name="Auchan">
-              {props => <AuchanScreen {...props} setGradientColors={setGradientColors} />}
+              {props => <AuchanScreen {...props} setAppState={setAppState} />}
             </Stack.Screen>
             <Stack.Screen name="Others">
-              {props => <OthersScreen {...props} setGradientColors={setGradientColors} />}
+              {props => <OthersScreen {...props} setAppState={setAppState} />}
             </Stack.Screen>
             </Stack.Navigator>
-            <BottomNavigation />
+            <BottomNavigation appState={appState} setAppState={setAppState}  />
           </BackgroundWrapper>
       </NavigationContainer>
     </SafeAreaView>

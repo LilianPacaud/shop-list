@@ -11,17 +11,19 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 type AuchanScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Auchan'>;
 
 type Props = {
-  setGradientColors: (colors: string[]) => void;
+  setAppState: (state: any) => void;
   navigation: AuchanScreenNavigationProp;
 };
 
-const AuchanScreen: React.FC<Props> = ({ setGradientColors, navigation }: Props) => {
+const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      setGradientColors(['#FFFFFF', '#1C2A44']);
-    });
-    return unsubscribe;
-  }, [navigation]);
+    setAppState((prevState: any) => ({
+      ...prevState,
+      gradientColors: ['#FFFFFF', '#1C2A44'],
+      bottomNavBgColor: 'rgba(28,42,58,0.29)',
+      activeButton: 'Auchan',
+    }));
+  }, [navigation, setAppState]);
 
   return (
     <View style={styles.container}>
