@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { Button, View, Text } from 'react-native';
+import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import styles from '../styles/screensStyle';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import HomeLogo from '../images/HomeLogo';
+import OthersLogo from '../images/OthersLogo';
 
 type OthersScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Others'>;
 
@@ -26,6 +26,7 @@ const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   return (
     <View style={styles.container}>
+      <OthersLogo />
       <View style={styles.logoFlex}>
       </View>
       <View style={styles.addElement}>

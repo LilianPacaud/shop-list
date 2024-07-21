@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, View, Text } from 'react-native';
+import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import styles from '../styles/screensStyle';
@@ -28,8 +28,8 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoFlex}>
-        <LeclercLogo />
-        <AuchanLogo />
+        <LeclercLogo style={{width: 52, heigth: 52}} />
+        <AuchanLogo style={{width: 52, heigth: 52}} />
       </View>
       <View style={styles.addElement}>
         <TextInput style={styles.input} placeholder="Ajouter un element"></TextInput>

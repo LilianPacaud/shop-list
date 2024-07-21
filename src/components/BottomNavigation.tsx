@@ -1,16 +1,31 @@
-import React, { useEffect } from 'react';
-import { View, Button, StyleSheet, TouchableHighlight, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import screenStyles from '../styles/screensStyle';
 import navStyles from '../styles/navStyle';
-import AllLogo from '../images/HomeLogo';
 import HomeLogo from '../images/HomeLogo';
 import GFLogo from '../images/GFLogo';
-import LeclercLogo from '../images/LeclercLogo';
+import AuchanLogoSmall from '../images/AuchanLogoSmall';
+import LeclercLogoSmall from '../images/LeclercLogoSmall';
+import OthersBtnLogo from '../images/OthersBtnLogo';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../types';
+
+interface BottomNavigationProps {
+  appState: {
+    bottomNavBgColor: string;
+    activeButton: string;
+    gradientColors: string[];
+  };
+  setAppState: React.Dispatch<React.SetStateAction<{
+    bottomNavBgColor: string;
+    activeButton: string;
+    gradientColors: string[];
+  }>>;
+}
 
 
-const BottomNavigation: React.FC = ({ appState, setAppState }) => {
-  const navigation = useNavigation();
+const BottomNavigation: React.FC<BottomNavigationProps> = ({ appState, setAppState }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();;
   return (
     <View style={[navStyles.nav, { backgroundColor: appState.bottomNavBgColor }]}>
         <TouchableOpacity
@@ -57,8 +72,11 @@ const BottomNavigation: React.FC = ({ appState, setAppState }) => {
           }));
         }}
       >
-        <View style={navStyles.button}>
-          <LeclercLogo />
+        <View style={navStyles.button}>   
+        <View>
+          <AuchanLogoSmall style={navStyles.bottomRight} />
+          <LeclercLogoSmall style={navStyles.topLeft} />
+        </View>   
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -74,6 +92,7 @@ const BottomNavigation: React.FC = ({ appState, setAppState }) => {
         }}
       >
         <View style={navStyles.button}>
+          <OthersBtnLogo />
         </View>
       </TouchableOpacity>
     </View>

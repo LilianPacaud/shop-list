@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, View, Text, StyleSheet,Image } from 'react-native';
+import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { TextInput } from 'react-native-gesture-handler';

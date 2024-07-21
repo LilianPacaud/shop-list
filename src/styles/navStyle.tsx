@@ -12,10 +12,21 @@ export default StyleSheet.create({
     button: {
       width: 70,
       height: 70,
+      padding: 40,
       borderRadius: 10,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    topLeft: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+    },
+    bottomRight: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
     },
 });
 

@@ -1,11 +1,11 @@
 import * as React from "react"
 import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg"
 
-function LeclercLogo(props: any) {
+function LeclercLogoSmall(props: any) {
   return (
     <Svg
-      width={53}
-      height={53}
+      width={35}
+      height={35}
       viewBox="0 0 53 53"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -36,4 +36,4 @@ function LeclercLogo(props: any) {
   )
 }
 
-export default LeclercLogo
+export default LeclercLogoSmall

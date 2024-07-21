@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Button, View, Text, StyleSheet,Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
 import { TextInput } from 'react-native-gesture-handler';
 import styles from '../styles/screensStyle';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AllLogo from '../images/HomeLogo';
 import HomeLogo from '../images/HomeLogo';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
