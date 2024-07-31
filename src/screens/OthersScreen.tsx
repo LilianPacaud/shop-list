@@ -53,6 +53,7 @@ const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         name: inputValue,
         screen: 'others'
       });
+      setInputValue('')
       console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       console.error('Error writing document: ', error);
@@ -63,7 +64,7 @@ const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     <View style={styles.container}>
       <OthersLogo />
       <View style={styles.addElement}>
-        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(225,157,94,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)}></TextInput>
+        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(225,157,94,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)} onSubmitEditing={addItemToList}></TextInput>
         <Icon onPress={() => {addItemToList()}} style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
       </View>
       <List items={list} screen={'others'} />

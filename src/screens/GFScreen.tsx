@@ -57,6 +57,7 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         name: inputValue,
         screen: 'GF'
       });
+      setInputValue('')
       console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       console.error('Error writing document: ', error);
@@ -67,7 +68,7 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     <View style={styles.container}>
     <GFLogo />
     <View style={styles.addElement}>
-      <TextInput style={[styles.inputAdd, {borderColor: 'rgba(147,147,147,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)}></TextInput>
+      <TextInput style={[styles.inputAdd, {borderColor: 'rgba(147,147,147,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)} onSubmitEditing={addItemToList}></TextInput>
       <Icon onPress={() => {addItemToList()}} style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
     </View>
     <List items={list} screen={'GF'} />

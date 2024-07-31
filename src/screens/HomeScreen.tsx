@@ -4,7 +4,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
 import { TextInput } from 'react-native-gesture-handler';
 import styles from '../styles/screensStyle';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import HomeLogo from '../images/HomeLogo';
 import List from '../components/List';
 import { firestore } from '../../firebaseConfig';

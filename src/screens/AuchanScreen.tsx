@@ -54,6 +54,7 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         name: inputValue,
         screen: 'auchan'
       });
+      setInputValue('')
       console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       console.error('Error writing document: ', error);
@@ -67,7 +68,7 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         <AuchanLogo style={{width: 52}} />
       </View>
       <View style={styles.addElement}>
-        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(28,42,58,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)}></TextInput>
+        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(28,42,58,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)} onSubmitEditing={addItemToList}></TextInput>
         <Icon onPress={() => {addItemToList()}} style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
       </View>
       <List items={list} screen={'auchan'} />
