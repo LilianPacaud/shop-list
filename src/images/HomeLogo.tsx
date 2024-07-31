@@ -1,14 +1,13 @@
 import * as React from "react"
-import Svg, { Path } from "react-native-svg"
+import Svg, { Path, SvgProps } from "react-native-svg"
 
-function HomeLogo(props: any) {
+function HomeLogo(props: SvgProps) {
   return (
     <Svg
       width={51}
       height={34}
       viewBox="0 0 51 34"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <Path

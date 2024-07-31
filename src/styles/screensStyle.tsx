@@ -7,12 +7,15 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    input: {
+    inputAdd: {
       height: 40,
       margin: 12,
-      borderWidth: 1,
       padding: 10,
-      borderRadius: 10
+      borderBottomWidth: 1
+    },
+    iconAdd: {
+      position: 'absolute', 
+      right: -25
     },
     logo: {
       marginTop: 17,
@@ -25,15 +28,24 @@ export default StyleSheet.create({
     addElement: {
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'center',
       alignItems: 'center',
     },
-    viewElements: {
-      width: '80%',
-      height: '70%',
-      backgroundColor: 'black',
-      marginTop: 10,
-      borderRadius: 10
+    element: {
+      padding: 10,
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexDirection: 'row'
+    },
+    icon: {
+      marginBottom: 10,
+    },
+    checkboxContainer: {
+      backgroundColor: 'transparent',
+      borderWidth: 0,
+    },
+    checkboxText: {
+      fontSize: 16,
     },
 });
 

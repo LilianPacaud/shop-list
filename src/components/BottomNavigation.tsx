@@ -8,19 +8,11 @@ import AuchanLogoSmall from '../images/AuchanLogoSmall';
 import LeclercLogoSmall from '../images/LeclercLogoSmall';
 import OthersBtnLogo from '../images/OthersBtnLogo';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
+import { RootStackParamList, State } from '../types';
 
 interface BottomNavigationProps {
-  appState: {
-    bottomNavBgColor: string;
-    activeButton: string;
-    gradientColors: string[];
-  };
-  setAppState: React.Dispatch<React.SetStateAction<{
-    bottomNavBgColor: string;
-    activeButton: string;
-    gradientColors: string[];
-  }>>;
+  appState: State
+  setAppState: React.Dispatch<React.SetStateAction<State>>;
 }
 
 
@@ -32,7 +24,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ appState, setAppSta
         style={[navStyles.button, appState.activeButton === 'Home' ? {backgroundColor: '#B78787'} : {backgroundColor: '#FFF'}]}
         onPress={() => {
           navigation.navigate('Home')
-          setAppState((prevState: any) => ({
+          setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
             activeButton: 'Home',
             gradientColors: ['#FFFFFF', '#FFB6C1'],
@@ -48,7 +40,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ appState, setAppSta
         style={[navStyles.button, appState.activeButton === 'GF' ? {backgroundColor: '#889B6F'} : {backgroundColor: '#FFF'}]}
         onPress={() => {
           navigation.navigate('GF')
-          setAppState((prevState: any) => ({
+          setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
             activeButton: 'GF',
             gradientColors: ['#FFFFFF', '#B8CD9E'],
@@ -64,7 +56,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ appState, setAppSta
         style={[navStyles.button, appState.activeButton === 'Auchan' ? {backgroundColor: '#A0ADC8'} : {backgroundColor: '#FFF'}]}
         onPress={() => {
           navigation.navigate('Auchan')
-          setAppState((prevState: any) => ({
+          setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
             activeButton: 'Auchan',
             gradientColors: ['#FFFFFF', '#1C2A44'],
@@ -83,7 +75,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ appState, setAppSta
         style={[navStyles.button, appState.activeButton === 'Others' ? {backgroundColor: '#FAA037'} : {backgroundColor: '#FFF'}]}
         onPress={() => {
           navigation.navigate('Others')
-          setAppState((prevState: any) => ({
+          setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
             activeButton: 'Others',
             gradientColors: ['#FFFFFF', '#D9A262'],

@@ -1,15 +1,13 @@
 import * as React from "react"
-import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg"
+import Svg, { Path, Defs, Pattern, Use, Image, SvgProps } from "react-native-svg"
 
-function LeclercLogoSmall(props: any) {
+function LeclercLogoSmall(props: SvgProps) {
   return (
     <Svg
       width={35}
       height={35}
       viewBox="0 0 53 53"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
     >
       <Path fill="url(#pattern0_26_6)" d="M0 0H53V53H0z" />

@@ -1,15 +1,13 @@
 import * as React from "react"
-import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg"
+import Svg, { Path, Defs, Pattern, Use, Image, SvgProps } from "react-native-svg"
 
-function GFLogo(props: any) {
+function GFLogo(props: SvgProps) {
   return (
     <Svg
       width={65}
       height={65}
       viewBox="0 0 65 65"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
     >
       <Path fill="url(#pattern0_26_13)" d="M0 0H65V65H0z" />

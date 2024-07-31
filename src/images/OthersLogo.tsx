@@ -1,15 +1,13 @@
 import * as React from "react"
-import Svg, { Circle, Path, Defs, Pattern, Use, Image } from "react-native-svg"
+import Svg, { Circle, Path, Defs, Pattern, Use, Image, SvgProps } from "react-native-svg"
 
-function OthersLogo(props: any) {
+function OthersLogo(props: SvgProps) {
   return (
     <Svg
       width={138}
       height={58}
       viewBox="0 0 138 58"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
     >
       <Circle

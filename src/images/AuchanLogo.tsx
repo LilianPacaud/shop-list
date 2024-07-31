@@ -1,15 +1,13 @@
 import * as React from "react"
-import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg"
+import Svg, { Path, Defs, Pattern, Use, Image, SvgProps } from "react-native-svg"
 
-function AuchanLogo(props: any) {
+function AuchanLogo(props: SvgProps) {
   return (
     <Svg
       width={53}
       height={53}
       viewBox="0 0 53 53"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
       {...props}
     >
       <Path fill="url(#pattern0_9_14)" d="M0 0H52V51H0z" />
