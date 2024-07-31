@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, State } from '../types';
+import { Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
 import LeclercLogo from '../images/LeclercLogo';
 import AuchanLogo from '../images/AuchanLogo';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import List from '../components/List';
+import { firestore } from '../../firebaseConfig';
+import { collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
 
 type AuchanScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Auchan'>;
 
@@ -16,12 +18,26 @@ type Props = {
   navigation: AuchanScreenNavigationProp;
 };
 
-type ItemProps = {
-  name: string
-}
-
 const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
-  const items: ItemProps[] = [{name: 'test1'}, {name: 'test2'},{name: 'test3'},{name: 'test4'},{name: 'test5'},{name: 'test6'},{name: 'test7'},{name: 'test8'}]
+  const [list, setList] = useState<Item[]>([]);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const collectionRef = collection(firestore, 'list');
+    const q = query(collectionRef, where('screen', '==', 'auchan'));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const docs = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setList(docs);
+    }, (error) => {
+      console.error('Error fetching documents: ', error);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     setAppState((prevState: React.SetStateAction<State>) => ({
@@ -32,6 +48,18 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     }));
   }, [navigation, setAppState]);
 
+  const addItemToList = async () => {
+    try {
+      const docRef = await addDoc(collection(firestore, 'list'), {
+        name: inputValue,
+        screen: 'auchan'
+      });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (error) {
+      console.error('Error writing document: ', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoFlex}>
@@ -39,10 +67,10 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         <AuchanLogo style={{width: 52}} />
       </View>
       <View style={styles.addElement}>
-        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(28,42,58,1)'}]} placeholder="Ajouter un element"></TextInput>
-        <Icon style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
+        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(28,42,58,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)}></TextInput>
+        <Icon onPress={() => {addItemToList()}} style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
       </View>
-      <List items={items} screen={'auchan'} />
+      <List items={list} screen={'auchan'} />
     </View>
   );
 };

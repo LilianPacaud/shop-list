@@ -7,6 +7,8 @@ import styles from '../styles/screensStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import HomeLogo from '../images/HomeLogo';
 import List from '../components/List';
+import { firestore } from '../../firebaseConfig';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -16,7 +18,23 @@ type Props = {
 };
 const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
-  const items: Item[] = [{name: 'spaghetti à la bolognaise'}, {name: 'test2'},{name: 'test3'},{name: 'test4'},{name: 'test5'},{name: 'test6'},{name: 'test7'},{name: 'test8'},{name: 'test9'},{name: 'test10'},{name: 'test11'},{name: 'test12'}]
+  const [documents, setDocuments] = useState<Item[]>([]);
+
+  useEffect(() => {
+    const collectionRef = collection(firestore, 'list');
+
+    const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
+      const docs = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setDocuments(docs);
+    }, (error) => {
+      console.error('Error fetching documents: ', error);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     setAppState((prevState: React.SetStateAction<State>) => ({
@@ -31,10 +49,9 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     <View style={styles.container}>
       <HomeLogo />
       <View style={styles.addElement}>
-        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(92,41,41,1)'}]} placeholder="Ajouter un element"></TextInput>
-        <Icon style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
+        <TextInput editable={false} style={[styles.inputAdd, {borderColor: 'rgba(92,41,41,1)'}]} placeholder="Ajouter un element"></TextInput>
       </View>
-      <List items={items} screen={'home'} />
+      <List items={documents} screen={'home'} />
     </View>
   );
 };

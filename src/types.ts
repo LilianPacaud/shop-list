@@ -12,5 +12,7 @@ export type State = {
 }
 
 export type Item = {
-  name: string
+  id: string,
+  name?: string,
+  screen?: string
 }

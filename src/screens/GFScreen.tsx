@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, Item, State } from '../types';
@@ -7,6 +7,8 @@ import styles from '../styles/screensStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import GFLogo from '../images/GFLogo';
 import List from '../components/List';
+import { firestore } from '../../firebaseConfig';
+import { collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
 
 type GFScreenNavigationProp = StackNavigationProp<RootStackParamList, 'GF'>;
 
@@ -20,7 +22,25 @@ type Props = {
 };
 
 const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
-  const items: Item[] = [{name: 'test1'}, {name: 'test2'},{name: 'test3'},{name: 'test4'},{name: 'test5'},{name: 'test6'},{name: 'test7'},{name: 'test8'}]
+  const [list, setList] = useState<Item[]>([]);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const collectionRef = collection(firestore, 'list');
+    const q = query(collectionRef, where('screen', '==', 'GF'));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const docs = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setList(docs);
+    }, (error) => {
+      console.error('Error fetching documents: ', error);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     setAppState((prevState: State) => ({
@@ -31,14 +51,26 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     }));
   }, [navigation, setAppState]);
 
+  const addItemToList = async () => {
+    try {
+      const docRef = await addDoc(collection(firestore, 'list'), {
+        name: inputValue,
+        screen: 'GF'
+      });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (error) {
+      console.error('Error writing document: ', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
     <GFLogo />
     <View style={styles.addElement}>
-      <TextInput style={[styles.inputAdd, {borderColor: 'rgba(147,147,147,1)'}]} placeholder="Ajouter un element"></TextInput>
-      <Icon style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
+      <TextInput style={[styles.inputAdd, {borderColor: 'rgba(147,147,147,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)}></TextInput>
+      <Icon onPress={() => {addItemToList()}} style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
     </View>
-    <List items={items} screen={'GF'} />
+    <List items={list} screen={'GF'} />
   </View>
   );
 };
