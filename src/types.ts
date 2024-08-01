@@ -14,5 +14,9 @@ export type State = {
 export type Item = {
   id: string,
   name?: string,
-  screen?: string
+  screen?: string,
+  primary?: boolean,
+  secondary?: boolean,
+  valid?: boolean,
+  count?: number
 }

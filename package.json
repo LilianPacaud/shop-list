@@ -1,6 +1,6 @@
 {
   "name": "shop-list-app",
-  "version": "0.2.1",
+  "version": "0.3",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "npx expo start",

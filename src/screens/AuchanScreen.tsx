@@ -50,12 +50,15 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   const addItemToList = async () => {
     try {
-      const docRef = await addDoc(collection(firestore, 'list'), {
+      await addDoc(collection(firestore, 'list'), {
         name: inputValue,
-        screen: 'auchan'
+        screen: 'auchan',
+        primary: false,
+        secondary: false,
+        valid: false,
+        count: 1
       });
       setInputValue('')
-      console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       console.error('Error writing document: ', error);
     }
