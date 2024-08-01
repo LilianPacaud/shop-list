@@ -21,6 +21,7 @@ export default {
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "shoplist"
     },
     android: {
       adaptiveIcon: {

@@ -1,9 +1,8 @@
 {
   "name": "shop-list-app",
   "version": "0.3",
-  "main": "expo/AppEntry.js",
   "scripts": {
-    "start": "npx expo start",
+    "start": "expo start --dev-client",
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
     "web": "npx expo web"
@@ -20,6 +19,7 @@
     "expo-linear-gradient": "^13.0.2",
     "expo-status-bar": "~1.12.1",
     "firebase": "^10.12.4",
+    "hermes-engine": "0.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.3",
