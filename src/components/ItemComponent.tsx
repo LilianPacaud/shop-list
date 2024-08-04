@@ -70,19 +70,19 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen }: ItemProps) => 
       switch (type) {
         case 'primary':
             updatedItem = { primary: check }
-            setCheckPrimary(check)
             break;
         case 'secondary':
             updatedItem = { secondary: check }
-            setCheckSecondary(check)
             break;
         case 'valid':
             updatedItem = { valid: check }
-            setCheckValid(check)
             break;
+        default:
+            console.error('Invalid type:', type);
+            return;
         }
       try {
-        await updateDoc(docRef, updatedItem);
+        await updateDoc(docRef, { [type]: check });
       } catch (error) {
         console.error('Error updating document:', error);
       }
