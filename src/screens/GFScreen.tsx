@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import GFLogo from '../images/GFLogo';
 import List from '../components/List';
 import { firestore } from '../../firebaseConfig';
-import { collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 
 type GFScreenNavigationProp = StackNavigationProp<RootStackParamList, 'GF'>;
 
@@ -27,7 +27,14 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   useEffect(() => {
     const collectionRef = collection(firestore, 'list');
-    const q = query(collectionRef, where('screen', '==', 'GF'));
+    const q = query(
+      collectionRef,
+      where('screen', '==', 'GF'),
+      orderBy('valid', 'desc'),
+      orderBy('primary', 'desc'),
+      orderBy('secondary', 'desc'),
+      orderBy('name', 'asc')
+    );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const docs = querySnapshot.docs.map(doc => ({

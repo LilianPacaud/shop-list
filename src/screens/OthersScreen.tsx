@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import OthersLogo from '../images/OthersLogo';
 import List from '../components/List';
 import { firestore } from '../../firebaseConfig';
-import { collection, addDoc, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 
 type OthersScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Others'>;
 
@@ -23,8 +23,14 @@ const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   useEffect(() => {
     const collectionRef = collection(firestore, 'list');
-    const q = query(collectionRef, where('screen', '==', 'others'));
-
+    const q = query(
+      collectionRef,
+      where('screen', '==', 'others'),
+      orderBy('valid', 'desc'),
+      orderBy('primary', 'desc'),
+      orderBy('secondary', 'desc'),
+      orderBy('name', 'asc')
+    );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const docs = querySnapshot.docs.map(doc => ({
         id: doc.id,

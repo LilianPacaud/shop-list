@@ -7,7 +7,7 @@ import styles from '../styles/screensStyle';
 import HomeLogo from '../images/HomeLogo';
 import List from '../components/List';
 import { firestore } from '../../firebaseConfig';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -22,7 +22,15 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   useEffect(() => {
     const collectionRef = collection(firestore, 'list');
 
-    const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
+    const q = query(
+      collectionRef,
+      orderBy('valid', 'desc'),
+      orderBy('primary', 'desc'),
+      orderBy('secondary', 'desc'), 
+      orderBy('name', 'asc')
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const docs = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
