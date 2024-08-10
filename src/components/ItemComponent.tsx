@@ -23,8 +23,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     const [checkSecondary, setCheckSecondary] = useState(item.secondary);
     const [checkValid, setCheckValid] = useState(item.valid);
     const [count, setCount] = useState(item.count)
-    const [cost, setCost] = useState('0')
-    const [costWidth, setCostWidth] = useState(10)
+    const [cost, setCost] = useState(item.cost?.toString())
     const [openUpdate, setOpenUpdate] = useState(false)
     const [inputValue, setInputValue] = useState(item.name);
 
@@ -46,28 +45,16 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       setCount(item.count)
     }, [item.count]);
 
-    const handleChangeText = (text: string) => {
-      const numericValue = text.replace(/[^0-9]/g, '');
-      const num = parseInt(numericValue, 10);
-      if(!isNaN(num) && cost === '0'){
-          setCost(num.toString())
-          setCostWidth(10)
-      } else if (!isNaN(num) && num >= 0 && num <= 99) {
-          setCost(numericValue);
-          if(num <= 9){
-              setCostWidth(10)
-          }
-          else{
-              setCostWidth(20)
-          }
-      } else if (text === '') {
-        setCostWidth(10)
-        setCost('0');
-      }
-    };
-
     const docRef = doc(firestore, 'list', item.id);
 
+    const handleChangeCost = async (text: string) => {
+      if(isNaN(parseFloat(text))){
+        setCost('')
+      }
+      else{
+        setCost(text)
+      }
+    };
 
     const updateCheck = async (check: boolean, type: string) => {
       try {
@@ -118,6 +105,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       try {
         await updateDoc(docRef, {
           name: inputValue,
+          cost: !isNaN(parseFloat(cost ?? '0')) ? parseFloat(cost ?? '0') : '0'
         });
         setOpenUpdate(false);
         console.log('Document successfully updated!');
@@ -129,21 +117,12 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     return(
       <View>
         {id !== 0 && <DashedBorder screen={screen}/>}
-        <TouchableOpacity>
         <GestureHandlerRootView>
         <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}  onSwipeableWillOpen={deleteItem}>
         <View style={itemStyles.item}>
           <Text style={itemStyles.itemText} onPress={handleOpenUpdate}>{item.name}</Text>
           <View style={itemStyles.actions}>
-            <View style={[itemStyles.action, itemStyles.cost]}>
-              <TextInput
-                style={[itemStyles.costInput, {width: costWidth}]}
-                value={cost}
-                onChangeText={handleChangeText}
-                keyboardType="numeric"
-              />
-              <Text>€</Text>
-            </View>
+            <Text style={[itemStyles.action, itemStyles.cost]} onPress={handleOpenUpdate}> {item.cost ?? 0}€</Text>
             <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
               <Icon name="numeric-1-circle-outline" size={15} color="#000" />
               <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0}} size={25} checked={checkPrimary} onPress={() => {updateCheck(!checkPrimary, 'primary')}} />
@@ -167,7 +146,6 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
         </View>
         </Swipeable>
         </GestureHandlerRootView>
-        </TouchableOpacity>
 
       <Modal 
       visible={openUpdate} 
@@ -187,6 +165,20 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   onChangeText={text => setInputValue(text)}
                   onSubmitEditing={handleSubmit}
                 />
+                <View style={itemStyles.costUpdateBlock}>
+                  <Text>Coût estimé: </Text>
+                  <View style={itemStyles.costUpdateBlockInput}>
+                    <TextInput
+                    style={[itemStyles.costInput]}
+                    value={cost}
+                    onChangeText={handleChangeCost}
+                    keyboardType="numeric"
+                    onSubmitEditing={handleSubmit}
+                    maxLength={4}
+                    />
+                    <Text style={itemStyles.costUpdateEuroSymbol}>€</Text>
+                  </View>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           </View>

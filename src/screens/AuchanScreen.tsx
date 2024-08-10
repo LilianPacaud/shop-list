@@ -63,7 +63,8 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         primary: false,
         secondary: false,
         valid: false,
-        count: 1
+        count: 1,
+        cost: 0
       });
       setInputValue('')
     } catch (error) {

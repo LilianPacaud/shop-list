@@ -1,3 +1,5 @@
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
+
 export type RootStackParamList = {
   Home: undefined;
   GF: undefined;
@@ -18,5 +20,6 @@ export type Item = {
   primary?: boolean,
   secondary?: boolean,
   valid?: boolean,
-  count?: number
+  count?: number,
+  cost?: Float
 }

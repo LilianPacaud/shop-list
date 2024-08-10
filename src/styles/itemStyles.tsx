@@ -27,7 +27,30 @@ export default StyleSheet.create({
       marginRight: 5
     },
     costInput: {
-      width: 15
+      width: '70%',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 3,
+      textAlign: 'center'
+    },
+    costUpdateBlock: {
+      display: 'flex', 
+      flexDirection: 'row', 
+      width: '100%', 
+      alignItems: 'center', 
+      justifyContent: 'space-around', 
+      marginTop: 20
+    },
+    costUpdateBlockInput: {
+      width: "50%", 
+      display: 'flex', 
+      flexDirection: 'row', 
+      alignItems: 
+      'center'
+    },
+    costUpdateEuroSymbol: { 
+      fontSize: 20, 
+      marginLeft: 10 
     },
     checkWithIcon: {
       display: 'flex',
