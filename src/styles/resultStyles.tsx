@@ -19,13 +19,17 @@ export default StyleSheet.create({
   resultsLeft: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     width: '60%',
     alignItems: 'center'
   },
   totalFinal: {
     fontSize: 40,
     fontWeight: 'bold'
+  },
+  resultsBlock: {
+    display: 'flex',
+    alignItems: 'center'
   },
   resultsText: {
     fontSize: 18

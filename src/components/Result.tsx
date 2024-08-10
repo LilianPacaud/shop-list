@@ -2,31 +2,62 @@ import { Text, View } from 'react-native';
 import styles from '../styles/resultStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { getScreenColor } from '../functions';
+import { Item } from '../types';
+import { useEffect, useState } from 'react';
 
 type ResultProps = {
-  screen: string 
+  screen: string,
+  items: Item[]
 }
 
-const Result: React.FC<ResultProps> = ({ screen }: ResultProps) => {
+const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
+    const [totalPrimary, setTotalPrimary] = useState<number>(0);
+    const [totalSecondary, setTotalSecondary] = useState<number>(0);
+    const [totalValid, setTotalValid] = useState<number>(0);
+    const [total, setTotal] = useState<number>(0);
+
+
+    useEffect(() => {
+      setTotalPrimary(0)
+      setTotalSecondary(0)
+      setTotalValid(0)
+      setTotal(0)
+
+      items.forEach(item => {
+      const itemCost = typeof item.cost === 'string' ? parseFloat(item.cost) : item.cost;
+      if (itemCost && !isNaN(itemCost)) {
+        if (item.primary) {
+          setTotalPrimary(prevCount => prevCount + itemCost);
+        }
+        if (item.secondary) {
+          setTotalSecondary(prevCount => prevCount + itemCost);
+        }
+        if (item.valid) {
+          setTotalValid(prevCount => prevCount + itemCost);
+        }
+        setTotal(prevCount => prevCount + itemCost);
+      }
+      });
+    }, [items]);
+
     let color = getScreenColor(screen, '1')
     return(
       <View style={[styles.results, {borderTopColor: color}]}>
         <View style={styles.resultsLeft}>
-          <Text style={styles.resultsText}>Total</Text>
-          <View>
+          <View style={styles.resultsBlock}>
             <Icon name="numeric-1-circle-outline" size={15} color="#000" />
-            <Text style={styles.resultsText}>0€</Text>
+            <Text style={styles.resultsText}>{totalPrimary}€</Text>
           </View>
-          <View>
+          <View style={styles.resultsBlock}>
             <Icon name="numeric-2-circle-outline" size={15} color="#000" />
-            <Text style={styles.resultsText}>0€</Text>
+            <Text style={styles.resultsText}>{totalSecondary}€</Text>
           </View>
-          <View>
+          <View style={styles.resultsBlock}>
             <Icon name="check-circle-outline" size={15} color="#000" />
-            <Text style={styles.resultsText}>0€</Text>
+            <Text style={styles.resultsText}>{totalValid}€</Text>
           </View>
         </View>
-        <Text style={[styles.totalFinal, {color}]}>0€</Text>
+        <Text style={[styles.totalFinal, {color}]}>{total}€</Text>
       </View>
     )
 }

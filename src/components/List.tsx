@@ -31,7 +31,7 @@ const List: React.FC<ListProps> = ({ items, screen }: ListProps) => {
         </View>
         )}
       </ScrollView>
-      <Result screen={screen} />
+      <Result screen={screen} items={items} />
     </View>
   )
 }
