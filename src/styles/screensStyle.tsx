@@ -7,6 +7,12 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    homeSeparator:  {
+      width: '30%', 
+      backgroundColor: 'rgba(92,41,41,1)', 
+      height: 2, 
+      margin: 30
+    },      
     inputAdd: {
       height: 40,
       margin: 12,

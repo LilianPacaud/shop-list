@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
-import { TextInput } from 'react-native-gesture-handler';
 import styles from '../styles/screensStyle';
 import HomeLogo from '../images/HomeLogo';
 import List from '../components/List';
@@ -55,9 +54,7 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   return (
     <View style={styles.container}>
       <HomeLogo />
-      <View style={styles.addElement}>
-        <TextInput editable={false} style={[styles.inputAdd, {borderColor: 'rgba(92,41,41,1)'}]} placeholder="Ajouter un element"></TextInput>
-      </View>
+      <View style={styles.homeSeparator} />
       <List items={documents} screen={'home'} />
     </View>
   );
