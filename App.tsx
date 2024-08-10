@@ -8,7 +8,12 @@ import BottomNavigation from './src/components/BottomNavigation';
 import OthersScreen from './src/screens/OthersScreen';
 import HomeScreen from './src/screens/HomeScreen'
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
+
 
 const Stack = createStackNavigator();
 
@@ -33,10 +38,25 @@ const BackgroundWrapper = ({ children, gradientColors }: { children: React.React
 
 export default function App() {
   const [appState, setAppState] = useState({
-    gradientColors: ['#FFFFFF', '#FFB6C1'], // Default colors
-    bottomNavBgColor: '#FFFFFF', // Default background color for BottomNavigation
-    activeButton: 'Home', // Default active button
+    gradientColors: ['#FFFFFF', '#FFB6C1'],
+    bottomNavBgColor: '#FFFFFF',
+    activeButton: 'Home',
   });
+
+  const [fontsLoaded] = Font.useFonts({
+    'inter-regular': require('./assets/fonts/Inter_28pt-Regular.ttf'),
+    'inter-bold': require('./assets/fonts/Inter_28pt-Bold.ttf'),
+  });
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.container}>

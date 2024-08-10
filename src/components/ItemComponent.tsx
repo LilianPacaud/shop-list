@@ -138,7 +138,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
             <View style={[itemStyles.action, itemStyles.count]}>
               <View style={itemStyles.countArrow}>
                 <Icon style={{marginTop: -7, marginBottom: -7}} name="chevron-up" size={25} color="#000" onPress={() => updateCount(count ? count + 1 : 1)} />
-                <Text>{count}</Text>
+                <Text style={itemStyles.countText}>{count}</Text>
                 <Icon style={{marginTop: -7, marginBottom: -7}} name="chevron-down" size={25} color="#000" onPress={() => updateCount(count && count > 1 ? count - 1 : 1)} />
               </View>
             </View>
@@ -166,7 +166,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   onSubmitEditing={handleSubmit}
                 />
                 <View style={itemStyles.costUpdateBlock}>
-                  <Text>Coût estimé: </Text>
+                  <Text style={itemStyles.estimatedCost}>Coût estimé: </Text>
                   <View style={itemStyles.costUpdateBlockInput}>
                     <TextInput
                     style={[itemStyles.costInput]}

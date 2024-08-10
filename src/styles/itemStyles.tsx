@@ -10,7 +10,8 @@ export default StyleSheet.create({
       alignItems: 'center',
     },
     itemText: {
-      width: '40%'
+      fontFamily: 'inter-regular',
+      width: '40%',
     },
     actions: {
       display: 'flex',
@@ -21,12 +22,14 @@ export default StyleSheet.create({
       paddingLeft: 0
     },
     cost:{
+      fontFamily: 'inter-regular',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       marginRight: 5
     },
     costInput: {
+      fontFamily: 'inter-regular',
       width: '70%',
       borderWidth: 1,
       borderRadius: 5,
@@ -66,6 +69,9 @@ export default StyleSheet.create({
       display: 'flex',
       alignItems: 'center'
     },
+    countText: {
+      fontFamily: 'inter-regular'
+    },
     actionContainer: {
       flex: 1,
     },
@@ -83,6 +89,9 @@ export default StyleSheet.create({
       alignItems: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
       padding: 20,
+    },
+    estimatedCost: {
+      fontFamily: 'inter-regular'
     },
     modalContainer: {
       width: '80%',
@@ -104,6 +113,7 @@ export default StyleSheet.create({
       color: '#333',
     },
     inputUpdate: {
+      fontFamily: 'inter-regular',
       width: '100%',
       borderWidth: 1,
       borderRadius: 5,

@@ -14,6 +14,7 @@ export default StyleSheet.create({
       margin: 30
     },      
     inputAdd: {
+      fontFamily: 'inter-regular',
       height: 40,
       margin: 12,
       padding: 10,

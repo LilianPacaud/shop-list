@@ -24,15 +24,16 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   totalFinal: {
+    fontFamily: 'inter-bold',
     fontSize: 40,
-    fontWeight: 'bold'
   },
   resultsBlock: {
     display: 'flex',
     alignItems: 'center'
   },
   resultsText: {
-    fontSize: 18
+    fontFamily: 'inter-regular',
+    fontSize: 18,
   }
 });
 
