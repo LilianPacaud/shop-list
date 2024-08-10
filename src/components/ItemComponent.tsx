@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import {Text, TouchableOpacity, View } from 'react-native';
 import itemStyles from '../styles/itemStyles';
 import DashedBorder from './DashedBorder';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { TextInput } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, Swipeable, TextInput } from 'react-native-gesture-handler';
 import { Item } from '../types';
 import { getScreenColor } from '../functions';
-import { doc, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../../firebaseConfig';
+import Animated from 'react-native-reanimated';
 
 type ItemProps = {
   id: number,
   item: Item,
   screen: string,
+  onDelete: (itemId: string) => void,
 }
 
-const ItemComponent: React.FC<ItemProps> = ({ id, item, screen }: ItemProps) => {
+const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: ItemProps) => {
     const [checkPrimary, setCheckPrimary] = useState(item.primary);
     const [checkSecondary, setCheckSecondary] = useState(item.secondary);
     const [checkValid, setCheckValid] = useState(item.valid);
@@ -66,21 +68,6 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen }: ItemProps) => 
 
 
     const updateCheck = async (check: boolean, type: string) => {
-      let updatedItem = {}
-      switch (type) {
-        case 'primary':
-            updatedItem = { primary: check }
-            break;
-        case 'secondary':
-            updatedItem = { secondary: check }
-            break;
-        case 'valid':
-            updatedItem = { valid: check }
-            break;
-        default:
-            console.error('Invalid type:', type);
-            return;
-        }
       try {
         await updateDoc(docRef, { [type]: check });
       } catch (error) {
@@ -97,9 +84,28 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen }: ItemProps) => 
       }
     };
 
+    const deleteItem = async () => {
+      try {
+        await deleteDoc(docRef);
+        onDelete(item.id);
+      } catch (error) {
+        console.error('Error deleting document:', error);
+      }
+    };
+  
+    const renderSwipeable = () => {
+      return (
+        <Animated.View style={[itemStyles.actionContainer]} />
+      );
+    };
+
+
     return(
       <View>
         {id !== 0 && <DashedBorder screen={screen}/>}
+        <TouchableOpacity onPress={openUpdateFct}>
+        <GestureHandlerRootView>
+        <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}  onSwipeableWillOpen={deleteItem}>
         <View style={itemStyles.item}>
           <Text style={itemStyles.itemText}>{item.name}</Text>
           <View style={itemStyles.actions}>
@@ -133,6 +139,10 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen }: ItemProps) => 
             </View>
           </View>
         </View>
+        </Swipeable>
+        </GestureHandlerRootView>
+        </TouchableOpacity>
+
       </View>
     )
 }

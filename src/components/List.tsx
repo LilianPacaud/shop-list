@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import styles from '../styles/listStyles';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,18 +12,28 @@ type ListProps = {
 }
 
 const List: React.FC<ListProps> = ({ items, screen }: ListProps) => {
-    return(
-      <View style={styles.blockElements}>
-        <ScrollView style={styles.elements}>
-          {items.map((item: Item, i: number) =>
-          <View>
-            <ItemComponent id={i} item={item} screen={screen} />
-          </View>
-          )}
-        </ScrollView>
-        <Result screen={screen} />
-      </View>
-    )
+  const [currentItems, setCurrentItems] = useState<Item[]>(items);
+  
+  useEffect(() => {
+    setCurrentItems(items);
+  }, [items]);
+
+  const handleItemDeleted = (deletedItemId: string) => {
+    setCurrentItems(prevItems => prevItems.filter(item => item.id !== deletedItemId));
+  };
+
+  return(
+    <View style={styles.blockElements}>
+      <ScrollView style={styles.elements}>
+        {currentItems.map((item: Item, i: number) =>
+        <View>
+          <ItemComponent key={i} id={i} item={item} screen={screen} onDelete={handleItemDeleted} />
+        </View>
+        )}
+      </ScrollView>
+      <Result screen={screen} />
+    </View>
+  )
 }
 
 export default List

@@ -42,6 +42,17 @@ export default StyleSheet.create({
     countArrow: {
       display: 'flex',
       alignItems: 'center'
+    },
+    actionContainer: {
+      flex: 1,
+    },
+    deleteButton: {
+      backgroundColor: '#fff',
+      padding: 20,
+    },
+    deleteText: {
+      color: 'white',
+      fontWeight: 'bold',
     }
 });
 
