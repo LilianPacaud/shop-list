@@ -129,11 +129,11 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     return(
       <View>
         {id !== 0 && <DashedBorder screen={screen}/>}
-        <TouchableOpacity onPress={handleOpenUpdate}>
+        <TouchableOpacity>
         <GestureHandlerRootView>
         <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}  onSwipeableWillOpen={deleteItem}>
         <View style={itemStyles.item}>
-          <Text style={itemStyles.itemText}>{item.name}</Text>
+          <Text style={itemStyles.itemText} onPress={handleOpenUpdate}>{item.name}</Text>
           <View style={itemStyles.actions}>
             <View style={[itemStyles.action, itemStyles.cost]}>
               <TextInput

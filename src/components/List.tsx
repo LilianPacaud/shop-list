@@ -26,8 +26,8 @@ const List: React.FC<ListProps> = ({ items, screen }: ListProps) => {
     <View style={styles.blockElements}>
       <ScrollView style={styles.elements}>
         {currentItems.map((item: Item, i: number) =>
-        <View>
-          <ItemComponent key={i} id={i} item={item} screen={screen} onDelete={handleItemDeleted} />
+        <View key={item.id}>
+          <ItemComponent key={item.id} id={i} item={item} screen={screen} onDelete={handleItemDeleted} />
         </View>
         )}
       </ScrollView>
