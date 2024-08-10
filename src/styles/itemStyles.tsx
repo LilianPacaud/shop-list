@@ -53,6 +53,39 @@ export default StyleSheet.create({
     deleteText: {
       color: 'white',
       fontWeight: 'bold',
-    }
+    },
+    modalUpdate: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      padding: 20,
+    },
+    modalContainer: {
+      width: '80%',
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      padding: 20,
+      alignItems: 'center',
+      elevation: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+    },
+    modalCloseButton: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+      fontSize: 20,
+      color: '#333',
+    },
+    inputUpdate: {
+      width: '100%',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      marginTop: 10,
+    },
 });
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Text, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import itemStyles from '../styles/itemStyles';
 import DashedBorder from './DashedBorder';
 import { CheckBox } from 'react-native-elements';
@@ -25,6 +25,8 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     const [count, setCount] = useState(item.count)
     const [cost, setCost] = useState('0')
     const [costWidth, setCostWidth] = useState(10)
+    const [openUpdate, setOpenUpdate] = useState(false)
+    const [inputValue, setInputValue] = useState(item.name);
 
     let color = getScreenColor(screen, '1')
 
@@ -99,11 +101,35 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       );
     };
 
+    const dismissKeyboard = () => {
+      Keyboard.dismiss();
+    };
+
+    const handleOpenUpdate = () => {
+      setOpenUpdate(true)
+    };
+
+    const handleCloseUpdate = () => {
+      setOpenUpdate(false);
+    };
+
+    const handleSubmit = async () => {
+      const docRef = doc(firestore, 'list', item.id);
+      try {
+        await updateDoc(docRef, {
+          name: inputValue,
+        });
+        setOpenUpdate(false);
+        console.log('Document successfully updated!');
+      } catch (error) {
+        console.error('Error updating document:', error);
+      }
+    };
 
     return(
       <View>
         {id !== 0 && <DashedBorder screen={screen}/>}
-        <TouchableOpacity onPress={openUpdateFct}>
+        <TouchableOpacity onPress={handleOpenUpdate}>
         <GestureHandlerRootView>
         <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}  onSwipeableWillOpen={deleteItem}>
         <View style={itemStyles.item}>
@@ -143,7 +169,30 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
         </GestureHandlerRootView>
         </TouchableOpacity>
 
-      </View>
+      <Modal 
+      visible={openUpdate} 
+      transparent={true} 
+      animationType="fade"
+      onRequestClose={handleCloseUpdate}
+      >
+        <TouchableWithoutFeedback onPress={handleCloseUpdate}>
+          <View style={itemStyles.modalUpdate}>
+            <TouchableWithoutFeedback onPress={dismissKeyboard}>
+              <View style={itemStyles.modalContainer}>
+                <TouchableOpacity onPress={handleCloseUpdate} style={itemStyles.modalCloseButton}>
+                </TouchableOpacity>
+                <TextInput
+                  style={itemStyles.inputUpdate}
+                  value={inputValue}
+                  onChangeText={text => setInputValue(text)}
+                  onSubmitEditing={handleSubmit}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+    </View>
     )
 }
 
