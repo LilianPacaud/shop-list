@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Text, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Modal, Text, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import itemStyles from '../styles/itemStyles';
 import DashedBorder from './DashedBorder';
 import { CheckBox } from 'react-native-elements';
@@ -170,11 +170,13 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   <View style={itemStyles.costUpdateBlockInput}>
                     <TextInput
                     style={[itemStyles.costInput]}
-                    value={cost}
+                    value={cost !== '0' ? cost : ''}
                     onChangeText={handleChangeCost}
-                    keyboardType="numeric"
+                    keyboardType="numeric" 
+                    inputMode={Platform.OS === 'ios' ? 'text' : 'numeric'}
                     onSubmitEditing={handleSubmit}
                     maxLength={4}
+                    returnKeyType="done" 
                     />
                     <Text style={itemStyles.costUpdateEuroSymbol}>€</Text>
                   </View>
