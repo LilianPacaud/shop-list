@@ -18,7 +18,8 @@ export default StyleSheet.create({
       height: 40,
       margin: 12,
       padding: 10,
-      borderBottomWidth: 1
+      borderBottomWidth: 1,
+      width: '35%'
     },
     iconAdd: {
       position: 'absolute', 

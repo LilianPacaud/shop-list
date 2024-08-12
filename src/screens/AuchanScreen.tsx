@@ -79,7 +79,13 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
         <AuchanLogo style={{width: 52}} />
       </View>
       <View style={styles.addElement}>
-        <TextInput style={[styles.inputAdd, {borderColor: 'rgba(28,42,58,1)'}]} placeholder="Ajouter un element" value={inputValue} onChangeText={text => setInputValue(text)} onSubmitEditing={addItemToList}></TextInput>
+        <TextInput 
+          style={[styles.inputAdd, {borderColor: 'rgba(28,42,58,1)'}]} 
+          placeholder="Ajouter un element" 
+          value={inputValue} 
+          onChangeText={text => setInputValue(text)} 
+          onSubmitEditing={addItemToList}
+          returnKeyType="done" />
         <Icon onPress={() => {addItemToList()}} style={styles.iconAdd} name="plus-circle-outline" size={30} color="#000" />
       </View>
       <List items={list} screen={'auchan'} />

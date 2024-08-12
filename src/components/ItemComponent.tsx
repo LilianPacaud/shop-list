@@ -164,6 +164,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   value={inputValue}
                   onChangeText={text => setInputValue(text)}
                   onSubmitEditing={handleSubmit}
+                  returnKeyType="done" 
                 />
                 <View style={itemStyles.costUpdateBlock}>
                   <Text style={itemStyles.estimatedCost}>Coût estimé: </Text>
