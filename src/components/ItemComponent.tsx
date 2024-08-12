@@ -129,9 +129,13 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
         <GestureHandlerRootView>
         <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}  onSwipeableWillOpen={deleteItem}>
         <View style={itemStyles.item}>
-          <Text style={itemStyles.itemText} onPress={handleOpenUpdate}>{item.name}</Text>
+          <TouchableOpacity style={itemStyles.nameCost} onPress={handleOpenUpdate}>
+            <View style={itemStyles.nameCostInside}>
+              <Text style={itemStyles.itemText}>{item.name}</Text>
+              <Text style={[itemStyles.action, itemStyles.cost]}> {item.cost ?? 0}€</Text>
+            </View>
+          </TouchableOpacity>
           <View style={itemStyles.actions}>
-            <Text style={[itemStyles.action, itemStyles.cost]} onPress={handleOpenUpdate}> {item.cost ?? 0}€</Text>
             <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
               <Icon name="numeric-1-circle-outline" size={15} color="#000" />
               <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0}} size={25} checked={checkPrimary} onPress={() => {updateCheck(!checkPrimary, 'primary')}} />

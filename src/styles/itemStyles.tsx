@@ -6,17 +6,28 @@ export default StyleSheet.create({
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'space-between',
-      padding: 10,
       alignItems: 'center',
+    },
+    nameCost: {
+      width: '50%',
+    },
+    nameCostInside: {
+      display: 'flex',
+      flexDirection: 'row',
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      padding: 10
     },
     itemText: {
       fontFamily: 'inter-regular',
-      width: '40%',
+      width: '100%',
     },
     actions: {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
+      padding: 10
     },
     action: {
       paddingLeft: 0
