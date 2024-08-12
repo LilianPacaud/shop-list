@@ -9,25 +9,41 @@ export default StyleSheet.create({
       alignItems: 'center',
     },
     nameCost: {
-      width: '50%',
+      width: '45%',
     },
     nameCostInside: {
       display: 'flex',
       flexDirection: 'row',
+      justifyContent: 'space-between',
       width: '100%',
       height: '100%',
       alignItems: 'center',
-      padding: 10
+      paddingLeft: 10,
     },
     itemText: {
       fontFamily: 'inter-regular',
-      width: '100%',
+      width: 'auto',
+      maxWidth: '80%'
     },
     actions: {
       display: 'flex',
+      width: '70%',
       flexDirection: 'row',
       alignItems: 'center',
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 0
+    },
+    actionsUpdate: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
       padding: 10
+    },
+    actionsCheck: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     action: {
       paddingLeft: 0
@@ -37,11 +53,10 @@ export default StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      marginRight: 5
     },
     costInput: {
       fontFamily: 'inter-regular',
-      width: '70%',
+      width: 70,
       borderWidth: 1,
       borderRadius: 5,
       padding: 3,
@@ -52,19 +67,22 @@ export default StyleSheet.create({
       flexDirection: 'row', 
       width: '100%', 
       alignItems: 'center', 
-      justifyContent: 'space-around', 
+      justifyContent: 'space-between', 
       marginTop: 20
     },
     costUpdateBlockInput: {
-      width: "50%", 
       display: 'flex', 
       flexDirection: 'row', 
-      alignItems: 
-      'center'
+      alignItems: 'center',
+      width: '30%'
+    },
+    estimatedCost: {
+      fontFamily: 'inter-regular',
+      width: '70%'
     },
     costUpdateEuroSymbol: { 
       fontSize: 20, 
-      marginLeft: 10 
+      marginLeft: 3 
     },
     checkWithIcon: {
       display: 'flex',
@@ -100,9 +118,6 @@ export default StyleSheet.create({
       alignItems: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
       padding: 20,
-    },
-    estimatedCost: {
-      fontFamily: 'inter-regular'
     },
     modalContainer: {
       width: '80%',

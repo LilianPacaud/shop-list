@@ -11,9 +11,8 @@ type ResultProps = {
 }
 
 const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
-    const [totalPrimary, setTotalPrimary] = useState<number>(0);
-    const [totalSecondary, setTotalSecondary] = useState<number>(0);
-    const [totalValid, setTotalValid] = useState<number>(0);
+    const [totalResto, setTotalResto] = useState<number>(0);
+    const [totalNotResto, setTotalNotResto] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
 
     function roundTo(num: number) {
@@ -22,22 +21,18 @@ const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
     }
 
     useEffect(() => {
-      setTotalPrimary(0)
-      setTotalSecondary(0)
-      setTotalValid(0)
+      setTotalResto(0)
+      setTotalNotResto(0)
       setTotal(0)
 
       items.forEach(item => {
       const itemCost = typeof item.cost === 'string' ? parseFloat(item.cost) : item.cost;
       if (itemCost && !isNaN(itemCost)) {
-        if (item.primary) {
-          setTotalPrimary(prevCount => roundTo(prevCount + itemCost))
+        if (item.resto) {
+          setTotalResto(prevCount => roundTo(prevCount + itemCost))
         }
-        if (item.secondary) {
-          setTotalSecondary(prevCount => roundTo(prevCount + itemCost));
-        }
-        if (item.valid) {
-          setTotalValid(prevCount => roundTo(prevCount + itemCost));
+        if (!item.resto) {
+          setTotalNotResto(prevCount => roundTo(prevCount + itemCost));
         }
         setTotal(prevCount => roundTo(prevCount + itemCost));
       }
@@ -49,16 +44,12 @@ const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
       <View style={[styles.results, {borderTopColor: color}]}>
         <View style={styles.resultsLeft}>
           <View style={styles.resultsBlock}>
-            <Icon name="numeric-1-circle-outline" size={15} color="#000" />
-            <Text style={styles.resultsText}>{totalPrimary}€</Text>
+            <Icon name="silverware-fork-knife" size={15} color="#000" />
+            <Text style={styles.resultsText}>{totalResto}€</Text>
           </View>
           <View style={styles.resultsBlock}>
-            <Icon name="numeric-2-circle-outline" size={15} color="#000" />
-            <Text style={styles.resultsText}>{totalSecondary}€</Text>
-          </View>
-          <View style={styles.resultsBlock}>
-            <Icon name="check-circle-outline" size={15} color="#000" />
-            <Text style={styles.resultsText}>{totalValid}€</Text>
+            <Icon name="home" size={15} color="#000" />
+            <Text style={styles.resultsText}>{totalNotResto}€</Text>
           </View>
         </View>
         <Text style={[styles.totalFinal, {color}]}>{total}€</Text>

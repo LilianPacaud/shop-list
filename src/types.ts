@@ -20,6 +20,7 @@ export type Item = {
   primary?: boolean,
   secondary?: boolean,
   valid?: boolean,
+  resto?: boolean,
   count?: number,
-  cost?: Float
+  cost?: Float,
 }

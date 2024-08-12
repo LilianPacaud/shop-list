@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   blockElements: {
-    width: '80%',
-    height: '70%',
+    width: '85%',
+    height: '75%',
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

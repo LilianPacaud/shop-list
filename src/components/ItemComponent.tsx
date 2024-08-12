@@ -22,6 +22,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     const [checkPrimary, setCheckPrimary] = useState(item.primary);
     const [checkSecondary, setCheckSecondary] = useState(item.secondary);
     const [checkValid, setCheckValid] = useState(item.valid);
+    const [checkResto, setCheckResto] = useState(item.resto);
     const [count, setCount] = useState(item.count)
     const [cost, setCost] = useState(item.cost?.toString())
     const [openUpdate, setOpenUpdate] = useState(false)
@@ -40,6 +41,10 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     useEffect(() => {
       setCheckValid(item.valid);
     }, [item.valid]);
+
+    useEffect(() => {
+      setCheckResto(item.resto);
+    }, [item.resto]);
 
     useEffect(() => {
       setCount(item.count)
@@ -148,6 +153,10 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
               <Icon name="check-circle-outline" size={15} color="#000" />
               <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0 }} size={25} checked={checkValid} onPress={() => {updateCheck(!checkValid, 'valid')}}/>
             </View>
+            <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
+              <Icon name="silverware-fork-knife" size={15} color="#000" />
+              <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0}} size={25} checked={checkResto} onPress={() => {updateCheck(!checkResto, 'resto')}} />
+            </View>
             <View style={[itemStyles.action, itemStyles.count]}>
               <View style={itemStyles.countArrow}>
                 <Icon style={{marginTop: -7, marginBottom: -7}} name="chevron-up" size={25} color="#000" onPress={() => updateCount(count ? count + 1 : 1)} />
@@ -180,8 +189,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   returnKeyType="done" 
                 />
                 <View style={itemStyles.costUpdateBlock}>
-                  <Text style={itemStyles.estimatedCost}>Coût estimé: </Text>
-                  <View style={itemStyles.costUpdateBlockInput}>
+                <View style={itemStyles.costUpdateBlockInput}>
                     <TextInput
                     style={[itemStyles.costInput]}
                     value={cost}
@@ -192,8 +200,34 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                     maxLength={5}
                     returnKeyType="done" 
                     />
-                    <Text style={itemStyles.costUpdateEuroSymbol}>€</Text>
                   </View>
+                <View style={itemStyles.actionsUpdate}>
+                  <View style={itemStyles.actionsCheck}>
+                    <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
+                      <Icon name="numeric-1-circle-outline" size={15} color="#000" />
+                      <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0}} size={25} checked={checkPrimary} onPress={() => {updateCheck(!checkPrimary, 'primary')}} />
+                    </View>
+                    <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
+                      <Icon name="numeric-2-circle-outline" size={15} color="#000" />
+                      <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0}} size={25} checked={checkSecondary} onPress={() => {updateCheck(!checkSecondary, 'secondary')}}/>
+                    </View>
+                    <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
+                      <Icon name="check-circle-outline" size={15} color="#000" />
+                      <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0 }} size={25} checked={checkValid} onPress={() => {updateCheck(!checkValid, 'valid')}}/>
+                    </View>
+                    <View style={[itemStyles.action, itemStyles.checkWithIcon]}>
+                      <Icon name="silverware-fork-knife" size={15} color="#000" />
+                      <CheckBox checkedColor={color} wrapperStyle={{marginLeft: -2, marginRight: -7}} containerStyle={{padding: 0}} size={25} checked={checkResto} onPress={() => {updateCheck(!checkResto, 'resto')}} />
+                    </View>
+                  </View>
+                  <View style={[itemStyles.action, itemStyles.count]}>
+                    <View style={itemStyles.countArrow}>
+                      <Icon style={{marginTop: -7, marginBottom: -7}} name="chevron-up" size={25} color="#000" onPress={() => updateCount(count ? count + 1 : 1)} />
+                      <Text style={itemStyles.countText}>{count}</Text>
+                      <Icon style={{marginTop: -7, marginBottom: -7}} name="chevron-down" size={25} color="#000" onPress={() => updateCount(count && count > 1 ? count - 1 : 1)} />
+                    </View>
+                  </View>
+                </View>
                 </View>
               </View>
             </TouchableWithoutFeedback>
