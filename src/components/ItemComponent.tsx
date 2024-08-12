@@ -48,6 +48,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
     const docRef = doc(firestore, 'list', item.id);
 
     const handleChangeCost = async (text: string) => {
+      text = text.replace(/,/g, '.');
       if(isNaN(parseFloat(text))){
         setCost('')
       }
