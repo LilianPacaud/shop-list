@@ -53,10 +53,16 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       const parts = cleanedText.split('.');
       if (parts.length > 2) {
         text = parts.shift() + '.' + parts.join('');
-      } else {
-        text = cleanedText;
+        setCost(text);
+      } else if (!parseFloat(text) || parseFloat(text) < 100) {
+        if(parts[1] && parts[1].length > 2){
+          text = parts[0] + '.' + parts[1].slice(0, -1)
+        }
+        else{
+          text = cleanedText;
+        }
+        setCost(text);
       }
-      setCost(text);
     };
 
     const updateCheck = async (check: boolean, type: string) => {
@@ -179,7 +185,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                     keyboardType="numeric" 
                     inputMode={Platform.OS === 'ios' ? 'text' : 'numeric'}
                     onSubmitEditing={handleSubmit}
-                    maxLength={4}
+                    maxLength={5}
                     returnKeyType="done" 
                     />
                     <Text style={itemStyles.costUpdateEuroSymbol}>€</Text>
