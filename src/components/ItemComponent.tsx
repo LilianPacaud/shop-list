@@ -47,14 +47,16 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
 
     const docRef = doc(firestore, 'list', item.id);
 
-    const handleChangeCost = async (text: string) => {
+    const handleChangeCost = (text: string) => {
       text = text.replace(/,/g, '.');
-      if(isNaN(parseFloat(text))){
-        setCost('')
+      const cleanedText = text.replace(/[^0-9.]/g, '');
+      const parts = cleanedText.split('.');
+      if (parts.length > 2) {
+        text = parts.shift() + '.' + parts.join('');
+      } else {
+        text = cleanedText;
       }
-      else{
-        setCost(text)
-      }
+      setCost(text);
     };
 
     const updateCheck = async (check: boolean, type: string) => {
@@ -172,7 +174,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   <View style={itemStyles.costUpdateBlockInput}>
                     <TextInput
                     style={[itemStyles.costInput]}
-                    value={cost !== '0' ? cost : ''}
+                    value={cost}
                     onChangeText={handleChangeCost}
                     keyboardType="numeric" 
                     inputMode={Platform.OS === 'ios' ? 'text' : 'numeric'}
