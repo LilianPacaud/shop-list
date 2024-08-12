@@ -16,6 +16,10 @@ const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
     const [totalValid, setTotalValid] = useState<number>(0);
     const [total, setTotal] = useState<number>(0);
 
+    function roundTo(num: number) {
+      const factor = Math.pow(10, 2)
+      return Math.round(num * factor) / factor
+    }
 
     useEffect(() => {
       setTotalPrimary(0)
@@ -27,15 +31,15 @@ const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
       const itemCost = typeof item.cost === 'string' ? parseFloat(item.cost) : item.cost;
       if (itemCost && !isNaN(itemCost)) {
         if (item.primary) {
-          setTotalPrimary(prevCount => prevCount + itemCost);
+          setTotalPrimary(prevCount => roundTo(prevCount + itemCost))
         }
         if (item.secondary) {
-          setTotalSecondary(prevCount => prevCount + itemCost);
+          setTotalSecondary(prevCount => roundTo(prevCount + itemCost));
         }
         if (item.valid) {
-          setTotalValid(prevCount => prevCount + itemCost);
+          setTotalValid(prevCount => roundTo(prevCount + itemCost));
         }
-        setTotal(prevCount => prevCount + itemCost);
+        setTotal(prevCount => roundTo(prevCount + itemCost));
       }
       });
     }, [items]);
