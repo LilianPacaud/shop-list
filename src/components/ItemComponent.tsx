@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Text, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import itemStyles from '../styles/itemStyles';
+import modalStyle from '../styles/modalStyle';
 import DashedBorder from './DashedBorder';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -176,13 +177,11 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       onRequestClose={handleCloseUpdate}
       >
         <TouchableWithoutFeedback onPress={handleCloseUpdate}>
-          <View style={itemStyles.modalUpdate}>
+          <View style={modalStyle.modalUpdate}>
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
-              <View style={itemStyles.modalContainer}>
-                <TouchableOpacity onPress={handleCloseUpdate} style={itemStyles.modalCloseButton}>
-                </TouchableOpacity>
+              <View style={modalStyle.modalContainer}>
                 <TextInput
-                  style={itemStyles.inputUpdate}
+                  style={modalStyle.inputUpdate}
                   value={inputValue}
                   onChangeText={text => setInputValue(text)}
                   onSubmitEditing={handleSubmit}
