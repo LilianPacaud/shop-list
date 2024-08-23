@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
-import HomeLogo from '../images/HomeLogo';
 import List from '../components/List';
 import { firestore } from '../../firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
@@ -53,7 +52,10 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <HomeLogo />
+      <Image
+        source={require('../../assets/images/L.png')}
+        style={styles.homeIcon}
+      />
       <View style={styles.homeSeparator} />
       <List items={documents} screen={'home'} />
     </View>

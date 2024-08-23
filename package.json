@@ -1,6 +1,6 @@
 {
   "name": "shop-list-app",
-  "version": "1.2",
+  "version": "1.21",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "npx expo run:android",

@@ -7,11 +7,15 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    homeIcon: {
+      width: 50,
+      height: 50
+    },
     homeSeparator:  {
       width: '30%', 
       backgroundColor: 'rgba(92,41,41,1)', 
       height: 2, 
-      margin: 30
+      margin: 15
     },      
     inputAdd: {
       fontFamily: 'inter-regular',

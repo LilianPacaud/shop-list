@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import navStyles from '../styles/navStyle';
-import HomeLogo from '../images/HomeLogo';
+import screenStyle from '../styles/screensStyle';
 import GFLogo from '../images/GFLogo';
 import AuchanLogoSmall from '../images/AuchanLogoSmall';
 import LeclercLogoSmall from '../images/LeclercLogoSmall';
@@ -33,7 +33,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ appState, setAppSta
         }}
         >
         <View style={navStyles.button}>
-          <HomeLogo />
+        <Image
+        source={require('../../assets/images/L.png')}
+        style={screenStyle.homeIcon}
+      />
         </View>
       </TouchableOpacity>
       <TouchableOpacity
