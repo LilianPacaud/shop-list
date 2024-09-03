@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, Item, State } from '../types';
 import { TextInput } from 'react-native-gesture-handler';
@@ -49,15 +49,6 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    setAppState((prevState: State) => ({
-      ...prevState,
-      gradientColors: ['#FFFFFF', '#B8CD9E'],
-      bottomNavBgColor: 'rgba(147,147,147,0.49)',
-      activeButton: 'GF',
-    }));
-  }, [navigation, setAppState]);
-
   const addItemToList = async () => {
     try {
       await addDoc(collection(firestore, 'list'), {
@@ -76,6 +67,18 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   };
 
   return (
+    <>
+    <TouchableOpacity onPress={() => {
+      navigation.navigate('Recipe')
+      setAppState((prevState: React.SetStateAction<State>) => ({
+        ...prevState,
+        activeButton: 'none',
+        gradientColors: ['#FFFFFF', '#997CB0'],
+        bottomNavBgColor: 'none',
+      }));
+    }} >
+      <Image style={styles.navigateRecipe} source={require('../../assets/images/recipe.png')}/>
+    </TouchableOpacity>
     <View style={styles.container}>
     <GFLogo />
     <View style={styles.addElement}>
@@ -90,6 +93,7 @@ const GFScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     </View>
     <List items={list} screen={'GF'} />
   </View>
+  </>
   );
 };
 

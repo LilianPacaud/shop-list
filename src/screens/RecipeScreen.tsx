@@ -3,30 +3,27 @@ import { View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
-import List from '../components/List';
 import { firestore } from '../../firebaseConfig';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ListRecip from '../components/ListRecipe';
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type RecipeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 type Props = {
   setAppState: (state: React.SetStateAction<State>) => void;
-  navigation: HomeScreenNavigationProp;
+  navigation: RecipeScreenNavigationProp;
 };
-const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
+const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   const [documents, setDocuments] = useState<Item[]>([]);
 
   useEffect(() => {
-    const collectionRef = collection(firestore, 'list');
+    const collectionRef = collection(firestore, 'recipe');
 
     const q = query(
       collectionRef,
-      orderBy('valid', 'desc'),
-      orderBy('primary', 'desc'),
-      orderBy('secondary', 'desc'), 
-      orderBy('name', 'asc')
+      orderBy('date', 'asc'),
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -45,26 +42,26 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   return (
     <>
       <TouchableOpacity onPress={() => {
-          navigation.navigate('Recipe')
+          navigation.navigate('Home')
           setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
-            activeButton: 'none',
-            gradientColors: ['#FFFFFF', '#997CB0'],
-            bottomNavBgColor: 'none',
+            activeButton: 'Home',
+            gradientColors: ['#FFFFFF', '#FFB6C1'],
+            bottomNavBgColor: 'rgba(92,41,41,0.49)',
           }));
         }} >
-        <Image style={styles.navigateRecipe} source={require('../../assets/images/recipe.png')}/>
+        <Image style={styles.navigateRecipe} source={require('../../assets/images/L.png')}/>
       </TouchableOpacity>
       <View style={styles.container}>
         <Image
-          source={require('../../assets/images/L.png')}
+          source={require('../../assets/images/recipe.png')}
           style={styles.homeIcon}
         />
         <View style={styles.homeSeparator} />
-        <List items={documents} screen={'home'} />
+        <ListRecip recipes={documents} screen={'home'} />
       </View>
     </>
   );
 };
 
-export default HomeScreen;
+export default RecipeScreen;

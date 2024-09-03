@@ -59,5 +59,12 @@ export default StyleSheet.create({
     checkboxText: {
       fontSize: 16,
     },
+    navigateRecipe: {
+      position: 'absolute',
+      left: 20,
+      top: 20,
+      width: 50,
+      height: 50,
+    }
 });
 

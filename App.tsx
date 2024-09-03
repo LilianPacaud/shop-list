@@ -4,13 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AuchanScreen from './src/screens/AuchanScreen';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import GFScreen from './src/screens/GFScreen';
-import BottomNavigation from './src/components/BottomNavigation';
 import OthersScreen from './src/screens/OthersScreen';
-import HomeScreen from './src/screens/HomeScreen'
+import HomeScreen from './src/screens/HomeScreen';
+import RecipeScreen from './src/screens/RecipeScreen';
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from 'react';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import ConditionalBottomNavigation from './src/components/ConditionalBottomNavigation';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,9 +39,9 @@ const BackgroundWrapper = ({ children, gradientColors }: { children: React.React
 
 export default function App() {
   const [appState, setAppState] = useState({
-    gradientColors: ['#FFFFFF', '#FFB6C1'],
-    bottomNavBgColor: '#FFFFFF',
     activeButton: 'Home',
+    gradientColors: ['#FFFFFF', '#FFB6C1'],
+    bottomNavBgColor: 'rgba(92,41,41,0.49)',
   });
 
   const [fontsLoaded] = Font.useFonts({
@@ -75,12 +76,15 @@ export default function App() {
             <Stack.Screen name="Others">
               {props => <OthersScreen {...props} setAppState={setAppState} />}
             </Stack.Screen>
-            </Stack.Navigator>
-            <BottomNavigation appState={appState} setAppState={setAppState}  />
-          </BackgroundWrapper>
+            <Stack.Screen name="Recipe">
+              {props => <RecipeScreen {...props} setAppState={setAppState} />}
+            </Stack.Screen>
+          </Stack.Navigator>
+          <ConditionalBottomNavigation appState={appState} setAppState={setAppState} />
+        </BackgroundWrapper>
       </NavigationContainer>
     </SafeAreaView>
-      );
+  );
 }
 
 const styles = StyleSheet.create({

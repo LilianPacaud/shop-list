@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
@@ -46,15 +46,6 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    setAppState((prevState: React.SetStateAction<State>) => ({
-      ...prevState,
-      gradientColors: ['#FFFFFF', '#1C2A44'],
-      bottomNavBgColor: 'rgba(28,42,58,0.29)',
-      activeButton: 'Auchan',
-    }));
-  }, [navigation, setAppState]);
-
   const addItemToList = async () => {
     try {
       await addDoc(collection(firestore, 'list'), {
@@ -73,6 +64,18 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   };
 
   return (
+    <>
+    <TouchableOpacity onPress={() => {
+      navigation.navigate('Recipe')
+      setAppState((prevState: React.SetStateAction<State>) => ({
+        ...prevState,
+        activeButton: 'none',
+        gradientColors: ['#FFFFFF', '#997CB0'],
+        bottomNavBgColor: 'none',
+      }));
+    }} >
+      <Image style={styles.navigateRecipe} source={require('../../assets/images/recipe.png')}/>
+    </TouchableOpacity>
     <View style={styles.container}>
       <View style={styles.logoFlex}>
         <LeclercLogo style={{width: 52}} />
@@ -90,6 +93,7 @@ const AuchanScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
       </View>
       <List items={list} screen={'auchan'} />
     </View>
+    </>
   );
 };
 
