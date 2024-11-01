@@ -27,9 +27,9 @@ export type Item = {
   cost?: Float,
 }
 
-export type DayRecipes = {
+export type DayRecipe = {
   id: string,
-  date?: Timestamp,
+  date: Timestamp,
   lunch?: Recipe,
   dinner?: Recipe
 }

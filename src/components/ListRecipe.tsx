@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import styles from '../styles/listStyles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { DayRecipes } from '../types';
+import { DayRecipe } from '../types';
 import Recipe from './Recipe';
 
 type ListProps = {
-  recipes: DayRecipes[],
+  recipes: DayRecipe[],
   screen: string 
 }
 
 const ListRecip: React.FC<ListProps> = ({ recipes, screen }: ListProps) => {
-  const [currentRecipes, setCurrentRecipes] = useState<DayRecipes[]>(recipes);
+  const [currentRecipes, setCurrentRecipes] = useState<DayRecipe[]>(recipes);
   
   useEffect(() => {
     setCurrentRecipes(recipes);
@@ -20,7 +20,7 @@ const ListRecip: React.FC<ListProps> = ({ recipes, screen }: ListProps) => {
   return(
     <View style={styles.blockElements}>
       <ScrollView style={styles.elements}>
-        {currentRecipes?.map((dayRecipes: DayRecipes, i: number) =>
+        {currentRecipes?.map((dayRecipes: DayRecipe, i: number) =>
         <View key={dayRecipes.id}>
           <Recipe key={dayRecipes.id} id={i} dayRecipe={dayRecipes} screen={screen} />
         </View>

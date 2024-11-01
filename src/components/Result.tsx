@@ -122,7 +122,7 @@ const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
         onRequestClose={handleCloseUpdate}
       >
         <TouchableWithoutFeedback onPress={handleCloseUpdate}>
-          <View style={modalStyle.modalUpdate}>
+          <View style={modalStyle.modal}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
               <View style={[modalStyle.modalContainer, modalStyle.modalContainerResult]}>
                 <Text>Total Carte Resto Max: </Text>

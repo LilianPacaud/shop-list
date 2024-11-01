@@ -13,6 +13,15 @@ export default StyleSheet.create({
     marginTop: 10,
     borderRadius: 10
   },
+  blockElementsIngredients: {
+    width: '90%',
+    height: 300,
+    marginTop: 30,
+    borderRadius: 10,
+    padding: 10,
+    borderStyle: 'dashed',
+    borderWidth: 0.5,
+  },
   elements: {
     position: 'relative',
     height: '85%',

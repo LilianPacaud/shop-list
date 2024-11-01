@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-modalUpdate: {
+modal: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -23,7 +23,7 @@ modalUpdate: {
   modalContainerResult: {
     display: 'flex', 
     flexDirection: 'row', 
-    justifyContent:'space-between'
+    justifyContent:'space-between',
   },
   inputUpdate: {
     fontFamily: 'inter-regular',
@@ -33,11 +33,66 @@ modalUpdate: {
     padding: 10,
     marginTop: 10,
   },
+  titleAddRecipe: {
+    fontWeight: 'bold'
+  },
+  inputAddRecipe: {
+    fontFamily: 'inter-regular',
+    width: '90%',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 20,
+  },
+  addIngredient: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
+    borderWidth: 1
+  },
+  inputAddIngredient: {
+    fontFamily: 'inter-regular',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+  },
   inputUpdateResult: {
     width: 'auto', 
     minWidth: 80, 
     textAlign:'center', 
     marginTop: 0, 
     padding: 0
+  },
+  datePickerBlock:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 20
+  },
+  datePicker: {
+    borderColor: 'black',
+    padding: 5,
+    borderBottomWidth: 1,
+    borderRadius: 5,
+    marginRight: 20
+  },
+  blockAddRecipe: {
+    width: '100%',
+    marginLeft: '10%',
+    marginTop: 30
+  },
+  addRecipe: {
+    padding: 8,
+    backgroundColor: '#997CB0',
+    borderRadius: 5,
+    width: '90%',
+  },
+  addRecipeText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });

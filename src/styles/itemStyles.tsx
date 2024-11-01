@@ -25,6 +25,19 @@ export default StyleSheet.create({
       width: 'auto',
       maxWidth: '80%'
     },
+    ingredientBlock: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    ingredientText: {
+      fontFamily: 'inter-regular',
+      width: 'auto',
+      maxWidth: '80%',
+      paddingTop: 5,
+      paddingBottom: 5,
+      marginLeft: 5
+    },
     actions: {
       display: 'flex',
       width: '70%',

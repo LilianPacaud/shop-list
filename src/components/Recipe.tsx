@@ -7,11 +7,11 @@ import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
-import { DayRecipes, Ingredient } from '../types';
+import { DayRecipe, Ingredient } from '../types';
 
 type RecipeProps = {
   id: number,
-  dayRecipe: DayRecipes,
+  dayRecipe: DayRecipe,
   screen: string,
 }
 

@@ -177,7 +177,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       onRequestClose={handleCloseUpdate}
       >
         <TouchableWithoutFeedback onPress={handleCloseUpdate}>
-          <View style={modalStyle.modalUpdate}>
+          <View style={modalStyle.modal}>
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
               <View style={modalStyle.modalContainer}>
                 <TextInput

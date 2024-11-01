@@ -65,6 +65,25 @@ export default StyleSheet.create({
       top: 20,
       width: 50,
       height: 50,
-    }
+    },
+    buttonAddRecipe: {
+      backgroundColor: '#fff',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      elevation: 4,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 4,
+      borderRadius: 10,
+      fontFamily: 'inter-regular',
+      padding: 15,
+      margin: 10
+    },
+    buttonAddRecipeText: {
+      marginLeft: 5
+    },
 });
 
