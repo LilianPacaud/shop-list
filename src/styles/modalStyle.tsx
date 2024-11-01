@@ -105,5 +105,20 @@ modal: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center'
-  }
+  },
+  viewBtnEditItem: {
+    width: '100%',
+    marginLeft: '10%',
+  },
+  btnEditItem: {
+    padding: 8,
+    borderRadius: 5,
+    width: '90%',
+    marginTop: 10
+  },
+  closeItemModal: {
+    position: 'absolute',
+    top: 5,
+    right: 5
+  },
 });

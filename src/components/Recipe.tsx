@@ -8,11 +8,14 @@ import Animated from 'react-native-reanimated';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
 import { DayRecipe, Ingredient } from '../types';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { firestore } from '../../firebaseConfig';
 
 type RecipeProps = {
   id: number,
   dayRecipe: DayRecipe,
   screen: string,
+  onDelete: (itemId: string) => void,
 }
 
 const formatDateToFrench = (date: Date) => {
@@ -24,12 +27,14 @@ const formatDateToFrench = (date: Date) => {
   return formatter.format(date);
 };
 
-const Recipe: React.FC<RecipeProps> = ({ id, dayRecipe, screen }: RecipeProps) => {
+const Recipe: React.FC<RecipeProps> = ({ id, dayRecipe, screen, onDelete }: RecipeProps) => {
     const [chevronLunch, setChevronLunch] = useState<string>('chevron-down');
     const [displayedIngredientsLunch, setDisplayedIngredientsLunch] = useState<'none' | 'flex'>('none');
 
     const [chevronDinner, setChevronDinner] = useState<string>('chevron-down');
     const [displayedIngredientsDinner, setDisplayedIngredientsDinner] = useState<'none' | 'flex'>('none');
+
+    const recipeRef = doc(firestore, 'recipe', dayRecipe.id);
 
     let date = null
     let formattedDate = null
@@ -61,11 +66,20 @@ const Recipe: React.FC<RecipeProps> = ({ id, dayRecipe, screen }: RecipeProps) =
       };
     }
 
+    const deleteRecipe = async () => {
+      try {
+        await deleteDoc(recipeRef);
+        onDelete(dayRecipe.id);
+      } catch (error) {
+        console.error('Error deleting document:', error);
+      }
+    };
+
     return(
       <View>
         {id !== 0 && <DashedBorder screen={screen}/>}
         <GestureHandlerRootView>
-        <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}>
+        <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable} onSwipeableWillOpen={deleteRecipe}>
         <View>
           <View>
             <View style={style.recipe}>

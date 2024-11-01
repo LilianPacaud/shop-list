@@ -34,7 +34,6 @@ const Ingredient: React.FC<ItemProps> = ({ id, item, recipeIngredients, setRecip
           setCurrentIcon('minus')
           setColor('red')
       }
-              console.log(recipeIngredients)
 
     };
 

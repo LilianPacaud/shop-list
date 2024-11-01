@@ -58,8 +58,6 @@ const Result: React.FC<ResultProps> = ({ screen, items }: ResultProps) => {
     setTotalResto(0);
     setTotalNotResto(0);
     setTotal(0);
-    setTotalRestoFinal(0)
-    setTotalNotRestoFinal(0)
 
     items.forEach(item => {
       const itemCost = typeof item.cost === 'string' ? parseFloat(item.cost) : item.cost;

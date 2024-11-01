@@ -48,7 +48,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     }
   };
 
-  const handleCloseUpdate = () => {
+  const handleCloseAdd = () => {
     setOpenAdd(false);
   };
 
@@ -214,7 +214,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
       visible={openAdd} 
       transparent={true} 
       animationType="fade"
-      onRequestClose={handleCloseUpdate}
+      onRequestClose={handleCloseAdd}
       >
         {/* <TouchableWithoutFeedback onPress={handleCloseUpdate}> */}
           <View style={modalStyle.modal}>
@@ -277,7 +277,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
                 <View style={modalStyle.blockAddRecipe}>
                   <TouchableHighlight onPress={handleAddRecipe} style={modalStyle.addRecipe}><Text style={modalStyle.addRecipeText}>AJOUTER</Text></TouchableHighlight>
                 </View>
-                <AntDesign style={modalStyle.closeRecipeModal} onPress={handleCloseUpdate} name={'close'} size={20}/>
+                <AntDesign style={modalStyle.closeRecipeModal} onPress={handleCloseAdd} name={'close'} size={20}/>
               </View>
           </View>
         {/* </TouchableWithoutFeedback> */}

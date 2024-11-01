@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Text, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
+import { Modal, Text, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, Platform, TouchableHighlight } from 'react-native';
 import itemStyles from '../styles/itemStyles';
 import modalStyle from '../styles/modalStyle';
 import DashedBorder from './DashedBorder';
@@ -11,6 +11,7 @@ import { getScreenColor } from '../functions';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../../firebaseConfig';
 import Animated from 'react-native-reanimated';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 type ItemProps = {
   id: number,
@@ -133,7 +134,7 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
       <View>
         {id !== 0 && <DashedBorder screen={screen}/>}
         <GestureHandlerRootView>
-        <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable}  onSwipeableWillOpen={deleteItem}>
+        <Swipeable renderLeftActions={renderSwipeable} renderRightActions={renderSwipeable} onSwipeableWillOpen={deleteItem}>
         <View style={itemStyles.item}>
           <TouchableOpacity style={itemStyles.nameCost} onPress={handleOpenUpdate}>
             <View style={itemStyles.nameCostInside}>
@@ -228,6 +229,10 @@ const ItemComponent: React.FC<ItemProps> = ({ id, item, screen, onDelete }: Item
                   </View>
                 </View>
                 </View>
+                <View style={modalStyle.viewBtnEditItem}>
+                  <TouchableHighlight onPress={handleSubmit} style={[modalStyle.btnEditItem, {backgroundColor: color}]} ><Text style={modalStyle.addRecipeText}>MODIFIER</Text></TouchableHighlight>
+                </View>
+                <AntDesign style={modalStyle.closeItemModal} onPress={handleCloseUpdate} name={'close'} size={20}/>
               </View>
             </TouchableWithoutFeedback>
           </View>
