@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Text, Modal, TouchableWithoutFeedback, Keyboard, TextInput, TouchableHighlight } from 'react-native';
+import { View, Image, Text, Modal, TouchableWithoutFeedback, Keyboard, TextInput, TouchableHighlight, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DayRecipe, Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import modalStyle from '../styles/modalStyle';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Octicons from 'react-native-vector-icons/Octicons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import ListIngredients from '../components/ListIngredients';
 
 type RecipeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -32,6 +33,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   const [meal, setMeal] = useState('lunch')
   const [country, setCountry] = React.useState();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const TouchableComponent = Platform.OS === 'ios' ? TouchableWithoutFeedback : TouchableOpacity;
 
   const handleChangeMeal= () => {
     switch (meal) {
@@ -183,7 +185,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   return (
     <>
-      <TouchableOpacity onPress={() => {
+      <TouchableComponent onPress={() => {
           navigation.navigate('Home')
           setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
@@ -193,7 +195,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
           }));
         }} >
         <Image style={styles.navigateRecipe} source={require('../../assets/images/L.png')}/>
-      </TouchableOpacity>
+      </TouchableComponent>
       <View style={styles.container}>
         <Image
           source={require('../../assets/images/recipe.png')}
@@ -216,7 +218,6 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
       >
         {/* <TouchableWithoutFeedback onPress={handleCloseUpdate}> */}
           <View style={modalStyle.modal}>
-            {/* <TouchableWithoutFeedback onPress={dismissKeyboard}> */}
               <View style={modalStyle.modalContainer}>
                 <Text style={modalStyle.titleAddRecipe}>Ajouter une recette</Text>
                 <TextInput
@@ -276,8 +277,8 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
                 <View style={modalStyle.blockAddRecipe}>
                   <TouchableHighlight onPress={handleAddRecipe} style={modalStyle.addRecipe}><Text style={modalStyle.addRecipeText}>AJOUTER</Text></TouchableHighlight>
                 </View>
+                <AntDesign style={modalStyle.closeRecipeModal} onPress={handleCloseUpdate} name={'close'} size={20}/>
               </View>
-            {/* </TouchableWithoutFeedback> */}
           </View>
         {/* </TouchableWithoutFeedback> */}
       </Modal>

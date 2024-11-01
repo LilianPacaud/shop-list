@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, View, Image } from 'react-native';
+import { TouchableOpacity, View, Image, TouchableWithoutFeedback, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
@@ -20,6 +20,7 @@ type Props = {
 const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   const [list, setList] = useState<Item[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const TouchableComponent = Platform.OS === 'ios' ? TouchableWithoutFeedback : TouchableOpacity;
 
   useEffect(() => {
     const collectionRef = collection(firestore, 'list');
@@ -63,7 +64,7 @@ const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   return (
     <>
-    <TouchableOpacity onPress={() => {
+    <TouchableComponent onPress={() => {
       navigation.navigate('Recipe')
       setAppState((prevState: React.SetStateAction<State>) => ({
         ...prevState,
@@ -73,9 +74,9 @@ const OthersScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
       }));
     }} >
       <Image style={styles.navigateRecipe} source={require('../../assets/images/recipe.png')}/>
-    </TouchableOpacity>
+    </TouchableComponent>
     <View style={styles.container}>
-      <OthersLogo />
+      <OthersLogo style={styles.logoTop}/>
       <View style={styles.addElement}>
         <TextInput 
           style={[styles.inputAdd, {borderColor: 'rgba(225,157,94,1)'}]} 

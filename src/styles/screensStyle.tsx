@@ -7,6 +7,9 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    logoTop: {
+      marginTop: 30
+    },
     homeIcon: {
       width: 50,
       height: 50
@@ -61,10 +64,11 @@ export default StyleSheet.create({
     },
     navigateRecipe: {
       position: 'absolute',
-      left: 20,
-      top: 20,
+      left: 40,
+      top: 35,
       width: 50,
       height: 50,
+      zIndex: 1
     },
     buttonAddRecipe: {
       backgroundColor: '#fff',

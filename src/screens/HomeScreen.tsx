@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, TouchableWithoutFeedback, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
@@ -7,6 +7,7 @@ import List from '../components/List';
 import { firestore } from '../../firebaseConfig';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -15,6 +16,7 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
+  const TouchableComponent = Platform.OS === 'ios' ? TouchableWithoutFeedback : TouchableOpacity;
 
   const [documents, setDocuments] = useState<Item[]>([]);
 
@@ -44,7 +46,7 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
 
   return (
     <>
-      <TouchableOpacity onPress={() => {
+      <TouchableComponent onPress={() => {
           navigation.navigate('Recipe')
           setAppState((prevState: React.SetStateAction<State>) => ({
             ...prevState,
@@ -54,11 +56,12 @@ const HomeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
           }));
         }} >
         <Image style={styles.navigateRecipe} source={require('../../assets/images/recipe.png')}/>
-      </TouchableOpacity>
+      </TouchableComponent>
+
       <View style={styles.container}>
         <Image
           source={require('../../assets/images/L.png')}
-          style={styles.homeIcon}
+          style={[styles.homeIcon, styles.logoTop]}
         />
         <View style={styles.homeSeparator} />
         <List items={documents} screen={'home'} />

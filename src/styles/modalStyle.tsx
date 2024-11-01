@@ -8,6 +8,12 @@ modal: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 20,
   },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   modalContainer: {
     width: '80%',
     backgroundColor: '#fff',
@@ -83,6 +89,11 @@ modal: {
     width: '100%',
     marginLeft: '10%',
     marginTop: 30
+  },
+  closeRecipeModal: {
+    position: 'absolute',
+    top: 10,
+    right: 10
   },
   addRecipe: {
     padding: 8,
