@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import itemStyles from '../styles/itemStyles';
 import { Item } from '../types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 type ItemProps = {
   id: number,
@@ -38,10 +37,10 @@ const Ingredient: React.FC<ItemProps> = ({ id, item, recipeIngredients, setRecip
     };
 
     return(
-      <TouchableWithoutFeedback style={itemStyles.ingredientBlock}>
-        <Icon onPress={() => {updateIngredient()}} style={{color}} name={currentIcon} size={20} color="#000" />
-        <Text onPress={() => {updateIngredient()}} style={[itemStyles.ingredientText, {color}]}>{item.name}</Text>
-      </TouchableWithoutFeedback>
+      <TouchableOpacity onPress={() => {updateIngredient()}} style={itemStyles.ingredientBlock}>
+        <Icon style={{color}} name={currentIcon} size={20} color="#000" />
+        <Text style={[itemStyles.ingredientText, {color}]}>{item.name}</Text>
+      </TouchableOpacity>
     )
 }
 
