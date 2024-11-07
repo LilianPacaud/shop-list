@@ -4,7 +4,7 @@ export default {
   expo: {
     name: "shop-list-app",
     slug: "shop-list-app",
-    version: "1.3.2",
+    version: "1.3.3",
     sdkVersion: "51.0.0",
     platforms: ["ios", "android"],
     orientation: "portrait",
