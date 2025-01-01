@@ -5,7 +5,7 @@ export default {
     name: "shop-list-app",
     slug: "shop-list-app",
     version: "1.3.3",
-    sdkVersion: "51.0.0",
+    sdkVersion: "52.0.0",
     platforms: ["ios", "android"],
     orientation: "portrait",
     icon: "./assets/icon.png",
