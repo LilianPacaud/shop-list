@@ -17,6 +17,10 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row'
     },
+    nameRight: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
     ingredient: {
         marginLeft: 40,
         marginTop: 5

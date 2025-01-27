@@ -16,7 +16,6 @@ export default StyleSheet.create({
   blockElementsIngredients: {
     width: '90%',
     height: 300,
-    marginTop: 30,
     borderRadius: 10,
     padding: 10,
     borderStyle: 'dashed',

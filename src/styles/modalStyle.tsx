@@ -76,14 +76,16 @@ modal: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 20
   },
   datePicker: {
     borderColor: 'black',
-    padding: 5,
+    paddingBottom: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
     borderBottomWidth: 1,
     borderRadius: 5,
-    marginRight: 20
+    marginRight: 20,
+    marginBottom: 20,
   },
   blockAddRecipe: {
     width: '100%',
@@ -121,4 +123,10 @@ modal: {
     top: 5,
     right: 5
   },
+
+  specificDate: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });

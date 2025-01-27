@@ -26,7 +26,7 @@ const ListRecip: React.FC<ListProps> = ({ recipes, screen }: ListProps) => {
       <ScrollView style={styles.elements}>
         {currentRecipes?.map((dayRecipes: DayRecipe, i: number) =>
         <View key={dayRecipes.id}>
-          <Recipe key={dayRecipes.id} id={i} dayRecipe={dayRecipes} screen={screen} onDelete={handleRecipeDeleted}/>
+          <Recipe allRecipes={recipes} key={dayRecipes.id} id={i} dayRecipe={dayRecipes} screen={screen} onDelete={handleRecipeDeleted}/>
         </View>
         )}
       </ScrollView>

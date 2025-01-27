@@ -9,13 +9,11 @@ type ItemProps = {
   item: Item,
   recipeIngredients: Item[]
   setRecipeIngredients: any
-  screen: string,
-  onDelete: (itemId: string) => void,
 }
 
-const Ingredient: React.FC<ItemProps> = ({ id, item, recipeIngredients, setRecipeIngredients, screen, onDelete }: ItemProps) => {
-    const [currentIcon, setCurrentIcon] = useState('minus');
-    const [color, setColor] = useState('red');
+const Ingredient: React.FC<ItemProps> = ({ id, item, recipeIngredients, setRecipeIngredients }: ItemProps) => {
+    const [currentIcon, setCurrentIcon] = useState(recipeIngredients.find((recipe) => recipe.name === item.name) ? 'plus' : 'minus');
+    const [color, setColor] = useState(recipeIngredients.find((recipe) => recipe.name === item.name) ? 'green' : 'red');
 
     const updateIngredient = async () => {
       switch (currentIcon) {

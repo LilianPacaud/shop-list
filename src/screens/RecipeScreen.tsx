@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { DayRecipe, Item, RootStackParamList, State } from '../types';
 import styles from '../styles/screensStyle';
 import { firestore } from '../../firebaseConfig';
-import {doc, collection, onSnapshot, orderBy, query, updateDoc, addDoc, Timestamp } from 'firebase/firestore';
+import {doc, collection, onSnapshot, orderBy, query, updateDoc, addDoc, Timestamp, arrayUnion } from 'firebase/firestore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ListRecipe from '../components/ListRecipe';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -12,7 +12,9 @@ import modalStyle from '../styles/modalStyle';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Octicons from 'react-native-vector-icons/Octicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Feather from 'react-native-vector-icons/Feather'
 import ListIngredients from '../components/ListIngredients';
+import { CheckBox } from 'react-native-elements';
 
 type RecipeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -30,21 +32,28 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   const [date, setDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
-  const [meal, setMeal] = useState('lunch')
+  const [meal, setMeal] = useState('none')
+  const [specificDate, setSpecificDate] = useState(false)
   const [country, setCountry] = React.useState();
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const TouchableComponent = Platform.OS === 'ios' ? TouchableWithoutFeedback : TouchableOpacity;
 
   const handleChangeMeal= () => {
     switch (meal) {
+      case 'none' :
+        setMeal('breakfast')
+        break;
+      case 'breakfast':
+        setMeal('lunch')
+        break;
       case 'lunch':
         setMeal('dinner')
         break;
       case 'dinner':
-        setMeal('lunch')
+        setMeal('none')
         break;
       default:
-        setMeal('dinner')
+        setMeal('lunch')
     }
   };
 
@@ -61,38 +70,40 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
   const handleAddRecipe = async () => {
     if(recetteNameAdd === '') return
     const existingRecipe = recipes.find(recipe => {
-      const recipeDate = recipe.date instanceof Timestamp ? recipe.date.toDate() : recipe.date;
-      return normalizeDate(recipeDate).getTime() === normalizeDate(date).getTime();
+      if(specificDate){
+        const recipeDate = recipe.date instanceof Timestamp ? recipe.date.toDate() : recipe.date;
+        return normalizeDate(recipeDate).getTime() === normalizeDate(date).getTime();
+      }
+      else {
+        return recipe.date === null;
+      }
     });
     try {
       if (existingRecipe) {
         const docId = existingRecipe.id; 
         const docRef = doc(firestore, 'recipe', docId);
-
-        if(meal === 'lunch'){
-          await updateDoc(docRef, {
-            lunch: { name: recetteNameAdd, ingredients: recipeIngredients },
-          });
-        }
-        else{
-          await updateDoc(docRef, {
-            dinner: { name: recetteNameAdd, ingredients: recipeIngredients },
-          });
-        }
-
-      } else {
-        if(meal === 'lunch'){
-          await addDoc(collection(firestore, 'recipe'), {
-            date,
-            lunch: {name: recetteNameAdd, ingredients: recipeIngredients},
-          });
-        }
-        else{
-          await addDoc(collection(firestore, 'recipe'), {
-            date,
-            dinner: {name: recetteNameAdd, ingredients: recipeIngredients},
-          });
-        }
+        await updateDoc(docRef, {
+          recipes: arrayUnion(
+            {
+              name: recetteNameAdd,
+              meal: meal === 'none' ? null : meal,
+              mealOrder: meal === 'none' ? 0 : meal === 'breakfast' ? 1 : meal === 'sun' ? 2 : meal === 'moon' ? 3 : 4,
+              ingredients: recipeIngredients
+            }
+          )
+        });
+       } else {
+        await addDoc(collection(firestore, 'recipe'), {
+          date,
+          recipes: [
+            {
+              name: recetteNameAdd,
+              meal: meal === 'none' ? null : meal,
+              mealOrder: meal === 'none' ? 0 : meal === 'breakfast' ? 1 : meal === 'sun' ? 2 : meal === 'moon' ? 3 : 4,
+              ingredients: recipeIngredients
+            }
+          ]
+        });
       }
       setRecetteNameAdd('')
       setOpenAdd(false);
@@ -116,17 +127,14 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     return date.toLocaleDateString('fr-FR', options); // Change 'fr-FR' to desired locale
   };
 
-  // Show the date picker
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
 
-  // Hide the date picker
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
 
-  // Handle date confirmation
   const handleConfirm = (selectedDate: any) => {
     setDate(selectedDate);
     hideDatePicker();
@@ -183,6 +191,18 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
     return () => unsubscribe();
   }, []);
 
+  const IconLunch = () => {
+    if(meal === 'none'){
+      return <AntDesign onPress={handleChangeMeal} name={'question'} size={20} color={"#000"} />
+    } else if (meal === 'breakfast') {
+      return <Feather onPress={handleChangeMeal} name={'sunrise'} size={20} color={"#D9A262"} />
+    } else if (meal === 'lunch') {
+      return <Octicons onPress={handleChangeMeal} name={'sun'} size={20} color={"#a7aa00"} />
+    } else if (meal === 'dinner') {
+      return <Octicons onPress={handleChangeMeal} name={'moon'} size={20} color={"#A0ADC8"} />
+    }
+  }
+
   return (
     <>
       <TouchableComponent onPress={() => {
@@ -227,14 +247,20 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
                   onChangeText={text => setRecetteNameAdd(text)}
                   returnKeyType="done" 
                 />
-                <View style={modalStyle.datePickerBlock}>
+                <View style={modalStyle.specificDate}>
+                  <Text>Spécifier une date</Text>
+                  <CheckBox checked={specificDate} onPress={() => {setSpecificDate(!specificDate)}} checkedColor='#ab62ff' />
+                  <IconLunch />
+                </View>
+                { specificDate && 
+                  <View style={modalStyle.datePickerBlock}>
                   <TouchableWithoutFeedback onPress={showDatePicker}>
                       <View style={modalStyle.datePicker} >
                         <Text>{formatDate(date)}</Text>
                       </View>
                   </TouchableWithoutFeedback>
-                  <Octicons onPress={handleChangeMeal} name={meal == 'lunch' ? 'sun': 'moon' } size={20} color={meal == 'lunch' ? "#D9A262": "#A0ADC8"} />
                 </View>
+                }
 
                 <ListIngredients ingredients={ingredients} setRecipeIngredients={setRecipeIngredients} recipeIngredients={recipeIngredients} screen={'home'} />
                 {/* <View style={modalStyle.addIngredient}>
@@ -291,6 +317,7 @@ const RecipeScreen: React.FC<Props> = ({ setAppState, navigation }: Props) => {
       />
     </>
   );
-};
+}
+;
 
 export default RecipeScreen;

@@ -30,8 +30,7 @@ export type Item = {
 export type DayRecipe = {
   id: string,
   date: Timestamp,
-  lunch?: Recipe,
-  dinner?: Recipe
+  recipes?: any,
 }
 
 export type Recipe = {
